@@ -15,22 +15,22 @@ const Wallet = () => {
 
   const sequence = {
     default: [
-      ["#card-3", { x: "0px", y: "0px" }],
-      ["#card-2", { x: "0px", y: "0px" }],
-      ["#card-1", { x: "0px", y: "0px" }],
+      ["#card-3", { x: "0px", y: "0px" }, { at: 0 }],
+      ["#card-2", { x: "0px", y: "0px" }, { at: 0.04 }],
+      ["#card-1", { x: "0px", y: "0px" }, { at: 0.08 }],
     ] satisfies AnimationSequence,
 
     animate: [
-      ["#card-1", { y: "-81px" }],
-      ["#card-2", { y: "-76px" }],
-      ["#card-3", { y: "-66px" }],
+      ["#card-1", { y: "-41px" }, { at: 0 }],
+      ["#card-2", { y: "-36px" }, { at: 0.04 }],
+      ["#card-3", { y: "-26px" }, { at: 0.08 }],
     ] satisfies AnimationSequence,
   };
 
   const onHover = (state: "start" | "end") => {
     animate(state === "start" ? sequence.animate : sequence.default, {
       defaultTransition: {
-        duration: 0.15,
+        duration: 0.1,
         ease: [0.33, 1, 0.68, 1],
       },
     });
@@ -59,7 +59,7 @@ const Wallet = () => {
         ) : (
           <motion.div
             className={cn(
-              "relative w-36 border h-36 rounded-4xl shadow-xl",
+              "relative w-36 border h-36 rounded-4xl shadow-xl group",
               selectedColor === "black" && "bg-neutral-800",
               selectedColor === "amber" && "bg-amber-700 border-amber-600",
             )}
@@ -92,13 +92,15 @@ const Wallet = () => {
                   id="card-1"
                   className="w-full rounded-3xl h-24 bg-amber-400 p-2 absolute bg-gradient-to-r from-rose-500 via-orange-400 to-amber-500"
                 ></div>
+
                 <div
                   id="card-2"
-                  className="w-full rounded-3xl h-24 bg-gradient-to-tr from-emerald-600 to-green-400 p-2 absolute top-4"
+                  className="w-full  rounded-3xl h-24 bg-gradient-to-tr from-emerald-600 to-green-400 p-2 absolute top-4"
                 ></div>
+
                 <div
                   id="card-3"
-                  className="w-full rounded-3xl h-24 bg-neutral-100 p-2 absolute top-8"
+                  className="w-full  rounded-3xl h-24 bg-neutral-100 p-2 absolute top-8"
                 >
                   <Image
                     src="/apple.svg"
