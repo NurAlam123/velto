@@ -1,45 +1,20 @@
 "use client";
 
 import useDevice from "@/hooks/useDevice";
-import { animate, AnimationSequence, motion } from "motion/react";
 import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const Wallet = () => {
-  const [clicked, setClicked] = useState(false);
   const [selectedColor, setSelectedColor] = useState<"black" | "amber">(
     "black",
   );
 
-  const sequence = {
-    default: [
-      ["#card-3", { x: "0px", y: "0px" }, { at: 0 }],
-      ["#card-2", { x: "0px", y: "0px" }, { at: 0.04 }],
-      ["#card-1", { x: "0px", y: "0px" }, { at: 0.08 }],
-    ] satisfies AnimationSequence,
-
-    animate: [
-      ["#card-1", { y: "-41px" }, { at: 0 }],
-      ["#card-2", { y: "-36px" }, { at: 0.04 }],
-      ["#card-3", { y: "-26px" }, { at: 0.08 }],
-    ] satisfies AnimationSequence,
-  };
-
-  const onHover = (state: "start" | "end") => {
-    animate(state === "start" ? sequence.animate : sequence.default, {
-      defaultTransition: {
-        duration: 0.1,
-        ease: [0.33, 1, 0.68, 1],
-      },
-    });
-  };
-
   const device = useDevice();
 
   return (
-    <motion.div className="relative border w-96 h-96 rounded-xl border-neutral-200 shadow-sm bg-neutral-50 p-1">
+    <div className="relative border w-96 h-96 rounded-xl border-neutral-200 shadow-sm bg-neutral-50 p-1">
       <div className="absolute right-2 top-2 flex gap-1">
         <button
           className="rounded-full size-6 bg-neutral-800 cursor-pointer"
@@ -57,18 +32,13 @@ const Wallet = () => {
         {!device ? (
           <Skeleton className="h-36 w-36 rounded-4xl" />
         ) : (
-          <motion.div
+          <div
             className={cn(
               "relative w-36 border h-36 rounded-4xl shadow-xl group",
               selectedColor === "black" && "bg-neutral-800",
-              selectedColor === "amber" && "bg-amber-700 border-amber-600",
+              selectedColor === "amber" &&
+                "bg-amber-700 border-amber-600 shadow-amber-700/15",
             )}
-            onClick={() => {
-              setClicked(!clicked);
-              onHover(clicked ? "start" : "end");
-            }}
-            onHoverStart={() => onHover("start")}
-            onHoverEnd={() => onHover("end")}
           >
             <div
               className="bg-inherit w-full h-16 absolute z-1 bottom-0 rounded-br-4xl rounded-bl-4xl overflow-hidden bg-blend-multiply"
@@ -88,20 +58,11 @@ const Wallet = () => {
             </div>
             <div className="p-2">
               <div className="text-black h-full rounded-3xl relative">
-                <div
-                  id="card-1"
-                  className="w-full rounded-3xl h-24 bg-amber-400 p-2 absolute bg-gradient-to-r from-rose-500 via-orange-400 to-amber-500"
-                ></div>
+                <div className="w-full rounded-3xl h-24 bg-amber-400 p-2 absolute bg-gradient-to-r from-rose-500 via-orange-400 to-amber-500 group-hover:-translate-y-[41px] delay-[80ms] group-hover:delay-[0ms] transition-transform duration-100"></div>
 
-                <div
-                  id="card-2"
-                  className="w-full  rounded-3xl h-24 bg-gradient-to-tr from-emerald-600 to-green-400 p-2 absolute top-4"
-                ></div>
+                <div className="w-full rounded-3xl h-24 bg-gradient-to-tr from-emerald-600 to-green-400 p-2 absolute top-4 group-hover:-translate-y-[36px] transition-transform duration-100 delay-[40ms] group-hover:delay-[40ms] ease-[[0.33,1,0.68,1]]"></div>
 
-                <div
-                  id="card-3"
-                  className="w-full  rounded-3xl h-24 bg-neutral-100 p-2 absolute top-8"
-                >
+                <div className="w-full  rounded-3xl h-24 bg-neutral-100 p-2 absolute top-8 group-hover:-translate-y-[26px] transition-transform duration-100 delay-[0ms] group-hover:delay-[80ms] ease-[[0.33,1,0.68,1]]">
                   <Image
                     src="/apple.svg"
                     alt="apple"
@@ -112,10 +73,10 @@ const Wallet = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
