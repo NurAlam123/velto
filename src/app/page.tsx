@@ -1,3 +1,4 @@
+import Countdown from "@/components/countdown";
 import Box from "@/components/ui/box";
 import Image from "@/components/ui/image";
 import Wallet from "@/components/wallet";
@@ -22,6 +23,9 @@ export default function Home() {
       <div className="flex justify-center items-center flex-col gap-4 pb-8">
         <Box title="Wallet">
           <Wallet />
+        </Box>
+        <Box title="Countdown Timer">
+          <Countdown />
         </Box>
       </div>
     </div>
