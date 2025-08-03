@@ -1,7 +1,7 @@
 "use client";
 
 import useDevice from "@/hooks/useDevice";
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import { Skeleton } from "./ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -14,7 +14,7 @@ const Wallet = () => {
   const device = useDevice();
 
   return (
-    <div className="relative border w-96 h-96 rounded-xl border-neutral-200 shadow-sm bg-neutral-50 p-1">
+    <div>
       <div className="absolute right-2 top-2 flex gap-1">
         <button
           className="rounded-full size-6 bg-neutral-800 cursor-pointer"
@@ -60,7 +60,7 @@ const Wallet = () => {
               <div className="text-black h-full rounded-3xl relative">
                 <div className="w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-[#373736] to-[#515151] group-hover:-translate-y-[60px] group-hover:-translate-x-[60px] group-hover:-rotate-[30deg] delay-[80ms] group-hover:delay-[0ms] transition-transform duration-100">
                   <Image
-                    src="/mastercard.svg"
+                    src="/logo/mastercard.svg"
                     alt="visa card"
                     width={256}
                     height={256}
@@ -71,14 +71,14 @@ const Wallet = () => {
                 <div className="w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-zinc-400 via-white to-zinc-400 top-4 group-hover:-translate-y-[68px] group-hover:translate-x-[60px] group-hover:rotate-[20deg] transition-transform duration-100 delay-[40ms] group-hover:delay-[40ms] ease-[[0.33,1,0.68,1]] flex justify-center items-center">
                   <div className="ms-1 relative flex justify-center flex-col items-center w-full h-full">
                     <Image
-                      src="/amex-logo.svg"
+                      src="/logo/amex-logo.svg"
                       alt="apple"
                       width={235}
                       height={15}
                       className="w-3/4 h-2 -mt-4"
                     />
                     <Image
-                      src="/amex.svg"
+                      src="/logo/amex.svg"
                       alt="apple"
                       width={1024}
                       height={1024}
@@ -89,7 +89,7 @@ const Wallet = () => {
 
                 <div className="w-full rounded-3xl h-24 bg-gradient-to-br from-sky-400 to-blue-700 p-2 absolute top-8 group-hover:-translate-y-[26px] transition-transform duration-100 delay-[0ms] group-hover:delay-[80ms] ease-[[0.33,1,0.68,1]]">
                   <Image
-                    src="/visa.svg"
+                    src="/logo/visa.svg"
                     alt="visa card"
                     width={250}
                     height={81}
