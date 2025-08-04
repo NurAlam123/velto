@@ -6,7 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-const Wallet = () => {
+const Wallet = ({ version }: { version?: number }) => {
   const [selectedColor, setSelectedColor] = useState<"black" | "amber">(
     "black",
   );
@@ -58,7 +58,14 @@ const Wallet = () => {
             </div>
             <div className="p-2">
               <div className="text-black h-full rounded-3xl relative">
-                <div className="w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-[#373736] to-[#515151] group-hover:-translate-y-[60px] group-hover:-translate-x-[60px] group-hover:-rotate-[30deg] delay-[80ms] group-hover:delay-[0ms] transition-transform duration-100">
+                <div
+                  className={cn(
+                    "w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-[#373736] to-[#515151] transition-transform duration-100 delay-[80ms] group-hover:delay-[0ms] ease-[[0.33,1,0.68,1]]",
+                    version === 1 &&
+                      "group-hover:-translate-y-[60px] group-hover:-translate-x-[60px] group-hover:-rotate-[30deg]",
+                    version === 2 && "group-hover:-translate-y-[41px]",
+                  )}
+                >
                   <Image
                     src="/logo/mastercard.svg"
                     alt="visa card"
@@ -68,7 +75,14 @@ const Wallet = () => {
                   />
                 </div>
 
-                <div className="w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-zinc-400 via-white to-zinc-400 top-4 group-hover:-translate-y-[68px] group-hover:translate-x-[60px] group-hover:rotate-[20deg] transition-transform duration-100 delay-[40ms] group-hover:delay-[40ms] ease-[[0.33,1,0.68,1]] flex justify-center items-center">
+                <div
+                  className={cn(
+                    "w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-zinc-400 via-white to-zinc-400 top-4 transition-transform duration-100 delay-[40ms] group-hover:delay-[40ms] ease-[[0.33,1,0.68,1]] flex justify-center items-center",
+                    version === 1 &&
+                      "group-hover:-translate-y-[68px] group-hover:translate-x-[60px] group-hover:rotate-[20deg] ",
+                    version === 2 && "group-hover:-translate-y-[36px]",
+                  )}
+                >
                   <div className="ms-1 relative flex justify-center flex-col items-center w-full h-full">
                     <Image
                       src="/logo/amex-logo.svg"
