@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "../ui/image";
 import NumberBox from "../shared/NumberBox";
+import { cn } from "@/lib/utils";
 
-const Countdown = () => {
+const Countdown = ({ version = 1 }: { version?: number }) => {
   const [duration, setDuration] = useState<number>(6);
   const [timeLeft, setTimeLeft] = useState<number>(duration);
 
@@ -20,7 +21,12 @@ const Countdown = () => {
     const elapsed =
       (timestamp - startTimeRef.current) / 1000 + previousElapsedRef.current;
 
-    const remaining = Math.ceil(Math.max(0, duration - elapsed));
+    let remaining;
+    if (version === 1) {
+      remaining = Math.ceil(Math.max(0, duration - elapsed));
+    } else {
+      remaining = Math.max(0, duration - elapsed);
+    }
     setTimeLeft(remaining);
 
     if (remaining > 0) requestRef.current = requestAnimationFrame(animate);
@@ -36,6 +42,8 @@ const Countdown = () => {
 
     // start the countdown
     if (!isRunning) {
+      if (requestRef.current) return;
+
       setIsRunning(true);
       startTimeRef.current = null;
       requestRef.current = requestAnimationFrame(animate);
@@ -67,9 +75,20 @@ const Countdown = () => {
 
   // reset on duration change
   useEffect(() => {
-    setTimeLeft(duration);
     reset();
   }, [duration]);
+
+  // resume the animation even if version change
+  useEffect(() => {
+    if (startTimeRef.current && isRunning) {
+      cancelAnimationFrame(requestRef.current ?? 0);
+      requestRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, [version]);
 
   // cleanup requestAnimationFrame
   useEffect(() => {
@@ -86,7 +105,10 @@ const Countdown = () => {
           onClick={handleClick}
         >
           <div
-            className="absolute z-[1] inset-0 transition-all ease-[0.33,1,0.68,1] duration-200 bg-white"
+            className={cn(
+              "absolute z-[1] inset-0 transition-all ease-[0.33,1,0.68,1] duration-200 bg-white",
+              !isRunning && "delay-200",
+            )}
             style={{
               height:
                 duration > 0 ? `${100 - (timeLeft / duration) * 100}%` : "100%",
@@ -95,7 +117,9 @@ const Countdown = () => {
 
           <div className="z-[2] text-center select-none mix-blend-difference">
             {/* number animation */}
-            <NumberBox current={timeLeft} count={duration} />
+            <div aria-live="polite">
+              <NumberBox current={Math.ceil(timeLeft)} count={duration} />
+            </div>
 
             {/* start - pause - reset */}
             <div className="text-neutral-400">
@@ -117,9 +141,9 @@ const Countdown = () => {
         <div className="mt-2 flex items-center justify-center">
           <button
             onClick={reset}
-            className="not-disabled:active:scale-90 active:transition-transform active:duration-100 active:ease-in-out disabled:opacity-50 cursor-pointer disabled:cursor-no-drop"
+            className="not-disabled:active:scale-90 active:transition-transform active:duration-100 active:ease-in-out disabled:opacity-50 cursor-pointer disabled:cursor-no-drop delay-100"
             aria-label="reset clock"
-            disabled={timeLeft === duration}
+            disabled={!isRunning && timeLeft === duration}
           >
             <Image
               src="/icons/reset.svg"
@@ -135,7 +159,7 @@ const Countdown = () => {
       <div className="absolute top-1/2 right-4 -translate-y-1/2">
         <div className="h-20 w-8 flex justify-around items-center flex-col rounded-xl bg-neutral-800 text-white">
           <button
-            className="text-neutral-300"
+            className="text-neutral-300 w-full cursor-pointer"
             onClick={() => duration < 10 && setDuration(duration + 1)}
           >
             +
@@ -144,7 +168,7 @@ const Countdown = () => {
             <NumberBox count={duration} current={duration} />
           </div>
           <button
-            className="text-neutral-300"
+            className="text-neutral-300 w-full cursor-pointer"
             onClick={() => duration > 1 && setDuration(duration - 1)}
           >
             -

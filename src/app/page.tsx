@@ -21,10 +21,15 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-4 pb-8">
-        <Box title="Wallet" badges={["hover"]} date="Aug 03, 2025">
+        <Box title="Wallet" badges={["hover"]} date="Aug 03, 2025" versions={2}>
           <Wallet />
         </Box>
-        <Box title="Countdown Timer" badges={["click"]} date="Aug 04, 2025">
+        <Box
+          title="Countdown Timer"
+          badges={["click"]}
+          date="Aug 04, 2025"
+          versions={2}
+        >
           <Countdown />
         </Box>
       </div>

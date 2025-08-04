@@ -2,22 +2,26 @@ import { cn } from "@/lib/utils";
 import { HTMLProps } from "react";
 import CopyLink from "../shared/CopyLink";
 import Badge from "./badge";
+import Version from "./version";
 
 const Box = ({
   title,
   className,
   badges,
   date,
+  children,
+  versions,
   ...props
 }: {
   title: string;
   badges?: Array<string>;
   date?: string;
+  versions?: number;
 } & HTMLProps<HTMLDivElement>) => {
   const id = title.toLocaleLowerCase()?.replace(" ", "-");
 
   return (
-    <div className="h-full w-full" id={id}>
+    <div className="h-full w-full relative" id={id}>
       <div className="flex justify-between items-end-safe px-4 py-2">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
@@ -47,7 +51,9 @@ const Box = ({
           className,
         )}
         {...props}
-      ></div>
+      >
+        <Version versions={versions || 1}>{children}</Version>
+      </div>
     </div>
   );
 };
