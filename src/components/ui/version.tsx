@@ -16,12 +16,12 @@ const Version = ({
 
   return (
     <>
-      <div className="absolute top-2 left-2 flex items-center rounded-full text-sm border border-neutral-300 overflow-hidden">
+      <div className="absolute top-2 left-2 flex items-center rounded-full text-sm overflow-hidden">
         {[...range(1, versions)].map((i) => (
           <button
             key={i}
             className={cn(
-              "px-3 py-0.5 text-neutral-800 bg-neutral-100 first:rounded-l-full last:rounded-r-full border-r border-neutral-300 transition duration-100 ease-in-out cursor-pointer",
+              "px-3 py-0.5 text-neutral-800 bg-neutral-200 first:rounded-l-full last:rounded-r-full transition duration-100 ease-in-out cursor-pointer",
               activeVersion === i &&
                 "bg-neutral-800 text-neutral-100 font-medium",
             )}
