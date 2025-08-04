@@ -2,7 +2,7 @@
 
 import useDevice from "@/hooks/useDevice";
 import Image from "@/components/ui/image";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 

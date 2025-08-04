@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { HTMLProps } from "react";
-import CopyLink from "../CopyLink";
+import CopyLink from "../shared/CopyLink";
 import Badge from "./badge";
 
 const Box = ({

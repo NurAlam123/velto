@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "./ui/image";
+import Image from "../ui/image";
 
 const CopyLink = ({ id }: { id: string }) => {
   const [copied, setCopied] = useState<boolean>(false);

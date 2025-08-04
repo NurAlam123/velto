@@ -1,7 +1,7 @@
-import Countdown from "@/components/countdown";
+import Countdown from "@/components/segments/countdown";
 import Box from "@/components/ui/box";
 import Image from "@/components/ui/image";
-import Wallet from "@/components/wallet";
+import Wallet from "@/components/segments/wallet";
 
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-4 pb-8">
-        <Box title="Wallet" badges={["click", "hover"]} date="Aug 03, 2025">
+        <Box title="Wallet" badges={["hover"]} date="Aug 03, 2025">
           <Wallet />
         </Box>
         <Box title="Countdown Timer" badges={["click"]} date="Aug 04, 2025">

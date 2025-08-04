@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "./ui/image";
-import NumberBox from "./ui/NumberBox";
+import Image from "../ui/image";
+import NumberBox from "../shared/NumberBox";
 
 const Countdown = () => {
   const [duration, setDuration] = useState<number>(6);
