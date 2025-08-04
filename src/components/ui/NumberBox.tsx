@@ -15,9 +15,9 @@ const NumberBox = ({
       )}
       {...props}
     >
-      <div className="h-7">
+      <div className="h-8 flex justify-center">
         <div
-          className="absolute left-1/2 -translate-x-1/2 transition-transform duration-100"
+          className="absolute left-1/2 -translate-x-1/2 transition-transform duration-200"
           style={{
             transform: `translateY(-${100 - (current / count) * 100}%)`,
           }}
@@ -25,10 +25,10 @@ const NumberBox = ({
           {[...range(1, count)].map((i) => (
             <span
               className={cn(
-                "h-7 block transition-all opacity-100 duration-100 ease-in-out",
+                "h-8 flex transition-all opacity-100 duration-100 ease-in-out scale-100 items-center",
                 current !== count - i + 1 &&
                   current > 0 &&
-                  "opacity-0 transition-all duration-100 ease-in-out",
+                  "opacity-0 transition-all duration-100 ease-in-out scale-50",
               )}
               key={i}
             >

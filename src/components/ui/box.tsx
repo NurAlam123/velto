@@ -1,17 +1,19 @@
 import { cn } from "@/lib/utils";
 import { HTMLProps } from "react";
+import CopyLink from "../CopyLink";
 
 const Box = ({
   title,
   className,
   ...props
-}: { title?: string } & HTMLProps<HTMLDivElement>) => {
+}: { title: string } & HTMLProps<HTMLDivElement>) => {
+  const id = title.toLocaleLowerCase()?.replace(" ", "-");
+
   return (
-    <div className="h-full w-full">
-      <div>
-        <p className="text-sm md:text-base text-neutral-500 px-4 py-1">
-          {title}
-        </p>
+    <div className="h-full w-full" id={id}>
+      <div className="flex items-center px-4 py-1 gap-2">
+        <CopyLink id={id} />
+        <p className="text-sm md:text-base text-neutral-800">{title}</p>
       </div>
       <div
         className={cn(
