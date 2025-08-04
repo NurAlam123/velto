@@ -1,5 +1,4 @@
 import Countdown from "@/components/countdown";
-import Badge from "@/components/ui/badge";
 import Box from "@/components/ui/box";
 import Image from "@/components/ui/image";
 import Wallet from "@/components/wallet";

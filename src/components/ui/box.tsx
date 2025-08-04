@@ -11,7 +11,7 @@ const Box = ({
   ...props
 }: {
   title: string;
-  badges?: Array<"hover" | "click" | string>;
+  badges?: Array<string>;
   date?: string;
 } & HTMLProps<HTMLDivElement>) => {
   const id = title.toLocaleLowerCase()?.replace(" ", "-");

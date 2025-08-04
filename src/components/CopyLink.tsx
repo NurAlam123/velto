@@ -5,11 +5,21 @@ import Image from "./ui/image";
 
 const CopyLink = ({ id }: { id: string }) => {
   const [copied, setCopied] = useState<boolean>(false);
+
   const handleClick = () => {
     const href = window.location.host + `/#${id}`;
-    window.navigator.clipboard.writeText(href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1000);
+
+    if (window.navigator.clipboard) {
+      window.navigator.clipboard
+        .writeText(href)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1000);
+        })
+        .catch((err) => {
+          console.error("Clipboard write failed:", err);
+        });
+    }
   };
 
   return (
