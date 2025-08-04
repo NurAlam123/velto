@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "../ui/image";
 import NumberBox from "../shared/NumberBox";
 import { cn } from "@/lib/utils";
+import { time } from "console";
 
 const Countdown = ({ version = 1 }: { version?: number }) => {
   const [duration, setDuration] = useState<number>(6);
@@ -94,8 +95,8 @@ const Countdown = ({ version = 1 }: { version?: number }) => {
         >
           <div
             className={cn(
-              "absolute z-[1] inset-0 transition-all ease-[0.33,1,0.68,1] duration-200 bg-white",
-              !isRunning && "delay-200",
+              "absolute z-[1] inset-0 transition-all ease-[0.33,1,0.68,1] duration-[170ms] bg-white",
+              !isRunning && timeLeft > 0 && "delay-[30ms]",
             )}
             style={{
               height:
