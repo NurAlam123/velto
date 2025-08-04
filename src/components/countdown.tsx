@@ -102,7 +102,7 @@ const Countdown = () => {
               {timeLeft <= 0 ? (
                 <p className="flex flex-col">
                   <span className="font-bold text-white">Time Over</span>
-                  <span className="text-xs">Tap to reset</span>
+                  <span className="text-xs">Tap to Reset</span>
                 </p>
               ) : isRunning ? (
                 <p className="text-xs">Tap to Pause</p>
