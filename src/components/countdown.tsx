@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "./ui/image";
+import NumberBox from "./ui/NumberBox";
 
 const Countdown = () => {
-  const duration = 6;
+  const [duration, setDuration] = useState<number>(6);
   const [timeLeft, setTimeLeft] = useState<number>(duration);
 
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -64,53 +65,91 @@ const Countdown = () => {
     previousElapsedRef.current = 0;
   };
 
+  // reset on duration change
+  useEffect(() => {
+    setTimeLeft(duration);
+    reset();
+  }, [duration]);
+
+  // cleanup requestAnimationFrame
+  useEffect(() => {
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, []);
+
   return (
     <div>
-      <div
-        className="relative h-72 w-32 rounded-2xl border-2 border-neutral-600 overflow-hidden flex justify-center items-center bg-gradient-to-b from-black to-neutral-600"
-        onClick={handleClick}
-      >
+      <div>
         <div
-          className="absolute z-[1] inset-0 transition-all ease-[0.12,0,0.39,0] duration-150 bg-white"
-          style={{
-            height: `${100 - (timeLeft / duration) * 100}%`,
-          }}
-        ></div>
+          className="relative h-72 w-32 rounded-2xl border-2 border-neutral-600 overflow-hidden flex justify-center items-center bg-gradient-to-b from-black to-neutral-600 shadow-md"
+          onClick={handleClick}
+        >
+          <div
+            className="absolute z-[1] inset-0 transition-all ease-[0.33,1,0.68,1] duration-200 bg-white"
+            style={{
+              height:
+                duration > 0 ? `${100 - (timeLeft / duration) * 100}%` : "100%",
+            }}
+          ></div>
 
-        <div className="z-[2] text-center select-none mix-blend-difference">
-          <div className="text-lg font-bold text-white relative h-fit overflow-visible">
-            <div className="h-7">
-              <div className="absolute left-1/2 -translate-x-1/2 transition-transform duration-500">
-                <p className="h-7">{timeLeft}</p>
-                {/* <p className="h-7">{timeLeft - 1}</p> */}
-                {/* <p className="h-7">{timeLeft - 2}</p> */}
-              </div>
+          <div className="z-[2] text-center select-none mix-blend-difference">
+            {/* number animation */}
+            <NumberBox current={timeLeft} count={duration} />
+
+            {/* start - pause - reset */}
+            <div className="text-neutral-400">
+              {timeLeft <= 0 ? (
+                <p className="flex flex-col">
+                  <span className="font-bold text-white">Time Over</span>
+                  <span className="text-xs">Tap to reset</span>
+                </p>
+              ) : isRunning ? (
+                <p className="text-xs">Tap to Pause</p>
+              ) : (
+                <p className="text-xs">Tap to Start</p>
+              )}
             </div>
           </div>
-          <p className="text-xs text-neutral-100">
-            {timeLeft <= 0
-              ? "Tap to reset"
-              : isRunning
-                ? "Tap to Pause"
-                : "Tap to Start"}
-          </p>
+        </div>
+
+        {/* Reset butotn */}
+        <div className="mt-2 flex items-center justify-center">
+          <button
+            onClick={reset}
+            className="not-disabled:active:scale-90 active:transition-transform active:duration-100 active:ease-in-out disabled:opacity-50 cursor-pointer disabled:cursor-no-drop"
+            aria-label="reset clock"
+            disabled={timeLeft === duration}
+          >
+            <Image
+              src="/icons/reset.svg"
+              alt="reset icon"
+              width={24}
+              height={24}
+              className="size-4"
+            />
+          </button>
         </div>
       </div>
-      <div className="mt-2 flex items-center justify-center">
-        <button
-          onClick={reset}
-          className="not-disabled:active:scale-90 active:transition-transform active:duration-100 active:ease-in-out disabled:opacity-50 cursor-pointer disabled:cursor-no-drop"
-          aria-label="reset clock"
-          disabled={timeLeft === duration}
-        >
-          <Image
-            src="/icons/reset.svg"
-            alt="reset icon"
-            width={24}
-            height={24}
-            className="size-4"
-          />
-        </button>
+
+      <div className="absolute top-1/2 right-4 -translate-y-1/2">
+        <div className="h-20 w-8 flex justify-around items-center flex-col rounded-xl bg-neutral-800 text-white">
+          <button
+            className="text-neutral-300"
+            onClick={() => duration < 10 && setDuration(duration + 1)}
+          >
+            +
+          </button>
+          <div className="w-full bg-neutral-800 cursor-default select-none">
+            <NumberBox count={duration} current={duration} />
+          </div>
+          <button
+            className="text-neutral-300"
+            onClick={() => duration > 1 && setDuration(duration - 1)}
+          >
+            -
+          </button>
+        </div>
       </div>
     </div>
   );
