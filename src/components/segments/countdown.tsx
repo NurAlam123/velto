@@ -76,19 +76,7 @@ const Countdown = ({ version = 1 }: { version?: number }) => {
   // reset on duration change
   useEffect(() => {
     reset();
-  }, [duration]);
-
-  // resume the animation even if version change
-  useEffect(() => {
-    if (startTimeRef.current && isRunning) {
-      cancelAnimationFrame(requestRef.current ?? 0);
-      requestRef.current = requestAnimationFrame(animate);
-    }
-
-    return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-    };
-  }, [version]);
+  }, [duration, version]);
 
   // cleanup requestAnimationFrame
   useEffect(() => {
