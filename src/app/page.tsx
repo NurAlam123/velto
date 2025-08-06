@@ -2,6 +2,7 @@ import Countdown from "@/components/segments/countdown";
 import Box from "@/components/ui/box";
 import Image from "@/components/ui/image";
 import Wallet from "@/components/segments/wallet";
+import GaborProject from "@/components/segments/GaborProject";
 
 export default function Home() {
   return (
@@ -31,6 +32,9 @@ export default function Home() {
           versions={2}
         >
           <Countdown />
+        </Box>
+        <Box title="Gabor">
+          <GaborProject />
         </Box>
       </div>
     </div>
