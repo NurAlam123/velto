@@ -21,7 +21,7 @@ export default function Home() {
           </a>
         </div>
       </div>
-      <div className="flex justify-center items-center flex-col gap-4 pb-8">
+      <div className="flex justify-center items-center flex-col gap-4 pb-8 md:pb-32">
         <Box title="Wallet" badges={["hover"]} date="Aug 03, 2025" versions={2}>
           <Wallet />
         </Box>
