@@ -1,5 +1,10 @@
 type GABOR_PROJECT_IMAGE_SOURCE_KEYS = "process" | "write" | "burn";
 
+export type GABOR_PROJECT_DATA_TYPES = {
+  title: string;
+  source: GABOR_PROJECT_IMAGE_SOURCE_VALUES;
+}[];
+
 export type GABOR_PROJECT_IMAGE_POSITION = {
   x: number;
   y: number;
@@ -30,7 +35,7 @@ export const GABOR_PROJECT_IMAGE_SOURCE: GABOR_PROJECT_IMAGE_SOURCE_TYPES = {
       alt: "Write 2",
       position: {
         x: 0,
-        y: -120,
+        y: -110,
       },
     },
     {
@@ -44,7 +49,7 @@ export const GABOR_PROJECT_IMAGE_SOURCE: GABOR_PROJECT_IMAGE_SOURCE_TYPES = {
   ],
   process: [
     {
-      src: "/gabor/process-1.gif",
+      src: "/gabor/process-1.jpg",
       alt: "Process 1",
       position: {
         x: -160,
@@ -52,11 +57,11 @@ export const GABOR_PROJECT_IMAGE_SOURCE: GABOR_PROJECT_IMAGE_SOURCE_TYPES = {
       },
     },
     {
-      src: "/gabor/process-2.jpg",
+      src: "/gabor/process-2.gif",
       alt: "Process 2",
       position: {
-        x: 0,
-        y: -100,
+        x: 10,
+        y: -80,
       },
     },
     {
@@ -82,7 +87,7 @@ export const GABOR_PROJECT_IMAGE_SOURCE: GABOR_PROJECT_IMAGE_SOURCE_TYPES = {
       alt: "Burn 2",
       position: {
         x: 10,
-        y: -70,
+        y: -60,
       },
     },
     {

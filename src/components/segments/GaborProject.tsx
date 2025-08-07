@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  GABOR_PROJECT_DATA_TYPES,
   GABOR_PROJECT_IMAGE_POSITION,
   GABOR_PROJECT_IMAGE_SOURCE,
   GABOR_PROJECT_IMAGE_SOURCE_VALUES,
@@ -16,56 +17,29 @@ const GaborProject = () => {
     GABOR_PROJECT_IMAGE_SOURCE.write,
   );
 
-  const handleHoverStart = (source: GABOR_PROJECT_IMAGE_SOURCE_VALUES) => {
-    setShow(true);
-    setSource(source);
-  };
-
-  const handleHoverEnd = () => {
-    setShow(false);
-  };
+  const GABOR_PROJECT_DATA: GABOR_PROJECT_DATA_TYPES = [
+    { title: "Write", source: GABOR_PROJECT_IMAGE_SOURCE.write },
+    { title: "Process", source: GABOR_PROJECT_IMAGE_SOURCE.process },
+    { title: "Burn", source: GABOR_PROJECT_IMAGE_SOURCE.burn },
+  ];
 
   return (
     <div className="w-full">
-      <p className="text-6xl mb-4 font-bold text-neutral-600 h-12 text-center">
-        PROJECT
+      <p className="text-6xl mb-4 font-bold text-neutral-800 h-12 text-center uppercase">
+        Flow
       </p>
       <div className="relative">
         <div className="mt-12">
           <div className="flex flex-col justify-center items-center">
-            <div className="relative w-full flex flex-col justify-start items-center">
-              <p
-                className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/50 hover:text-neutral-800 cursor-pointer select-none scale-y-[130%] hover:scale-y-[140%] ease-elastic uppercase"
-                onMouseEnter={() =>
-                  handleHoverStart(GABOR_PROJECT_IMAGE_SOURCE.write)
-                }
-                onMouseLeave={handleHoverEnd}
-              >
-                Write
-              </p>
-            </div>
-            <div className="relative w-full flex flex-col justify-center items-center">
-              <p
-                className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/50 hover:text-neutral-800 cursor-pointer select-none scale-y-[130%] hover:scale-y-[140%] ease-elastic uppercase"
-                onMouseEnter={() =>
-                  handleHoverStart(GABOR_PROJECT_IMAGE_SOURCE.process)
-                }
-                onMouseLeave={handleHoverEnd}
-              >
-                Process
-              </p>
-            </div>
-            <div className="relative w-full flex flex-col justify-center items-center">
-              <p
-                onMouseEnter={() =>
-                  handleHoverStart(GABOR_PROJECT_IMAGE_SOURCE.burn)
-                }
-                onMouseLeave={handleHoverEnd}
-                className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/50 hover:text-neutral-800 cursor-pointer select-none scale-y-[130%] hover:scale-y-[140%] ease-elastic uppercase"
-              >
-                Burn
-              </p>
-            </div>
+            {GABOR_PROJECT_DATA.map(({ title, source }) => (
+              <GaborProject.Title
+                key={title}
+                title={title}
+                setShow={setShow}
+                setSource={setSource}
+                source={source}
+              />
+            ))}
           </div>
         </div>
         <AnimatePresence mode="wait">
@@ -90,6 +64,38 @@ const GaborProject = () => {
           )}
         </AnimatePresence>
       </div>
+    </div>
+  );
+};
+
+GaborProject.Title = ({
+  title,
+  setShow,
+  source,
+  setSource,
+}: {
+  title: string;
+  setShow: (value: boolean) => void;
+  source: GABOR_PROJECT_IMAGE_SOURCE_VALUES;
+  setSource: (source: GABOR_PROJECT_IMAGE_SOURCE_VALUES) => void;
+}) => {
+  const handleHoverStart = (source: GABOR_PROJECT_IMAGE_SOURCE_VALUES) => {
+    setShow(true);
+    setSource(source);
+  };
+
+  const handleHoverEnd = () => {
+    setShow(false);
+  };
+  return (
+    <div className="relative w-full flex flex-col justify-start items-center">
+      <p
+        className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/70 hover:text-neutral-800 cursor-pointer select-none scale-y-[115%] hover:scale-y-[125%] ease-elastic uppercase"
+        onMouseEnter={() => handleHoverStart(source)}
+        onMouseLeave={handleHoverEnd}
+      >
+        {title}
+      </p>
     </div>
   );
 };
