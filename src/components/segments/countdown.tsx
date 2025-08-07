@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "../ui/image";
 import NumberBox from "../shared/NumberBox";
 import { cn } from "@/lib/utils";
-import { time } from "console";
 
 const Countdown = ({ version = 1 }: { version?: number }) => {
   const [duration, setDuration] = useState<number>(6);

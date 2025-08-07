@@ -68,7 +68,7 @@ const GaborProject = () => {
   );
 };
 
-GaborProject.Title = ({
+GaborProject.Title = function GaborProjectTitle({
   title,
   setShow,
   source,
@@ -78,7 +78,7 @@ GaborProject.Title = ({
   setShow: (value: boolean) => void;
   source: GABOR_PROJECT_IMAGE_SOURCE_VALUES;
   setSource: (source: GABOR_PROJECT_IMAGE_SOURCE_VALUES) => void;
-}) => {
+}) {
   const handleHoverStart = (source: GABOR_PROJECT_IMAGE_SOURCE_VALUES) => {
     setShow(true);
     setSource(source);
@@ -100,13 +100,13 @@ GaborProject.Title = ({
   );
 };
 
-GaborProject.ImageBox = ({
+GaborProject.ImageBox = function GaborProjectImageBox({
   children,
   position,
 }: {
   children: React.ReactNode;
   position: GABOR_PROJECT_IMAGE_POSITION;
-}) => {
+}) {
   const calculatedPosition = {
     x: position.x + random(-8, 8),
     y: position.y + random(-8, 8),
@@ -157,7 +157,13 @@ GaborProject.ImageBox = ({
   );
 };
 
-GaborProject.Image = ({ src, alt }: { src: string; alt: string }) => {
+GaborProject.Image = function GaborProjectImage({
+  src,
+  alt,
+}: {
+  src: string;
+  alt: string;
+}) {
   return (
     <Image
       src={src}
