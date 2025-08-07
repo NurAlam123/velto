@@ -1,20 +1,22 @@
 "use client";
 
 import {
-  GABOR_PROJECT_SOURCE,
-  GABOR_PROJECT_SOURCE_VALUES,
+  GABOR_PROJECT_IMAGE_POSITION,
+  GABOR_PROJECT_IMAGE_SOURCE,
+  GABOR_PROJECT_IMAGE_SOURCE_VALUES,
 } from "@/constants/gabor";
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion, Variants } from "motion/react";
+import { random } from "@/lib/utils";
 
 const GaborProject = () => {
   const [show, setShow] = useState(false);
-  const [source, setSource] = useState<GABOR_PROJECT_SOURCE_VALUES>(
-    GABOR_PROJECT_SOURCE.burn,
+  const [source, setSource] = useState<GABOR_PROJECT_IMAGE_SOURCE_VALUES>(
+    GABOR_PROJECT_IMAGE_SOURCE.write,
   );
 
-  const handleHoverStart = (source: GABOR_PROJECT_SOURCE_VALUES) => {
+  const handleHoverStart = (source: GABOR_PROJECT_IMAGE_SOURCE_VALUES) => {
     setShow(true);
     setSource(source);
   };
@@ -22,23 +24,6 @@ const GaborProject = () => {
   const handleHoverEnd = () => {
     setShow(false);
   };
-
-  const jiggleVariant = {
-    initial: { scale: 0, rotate: 0 },
-    animate: {
-      scale: 1,
-      rotate: [-10, 0],
-      transition: {
-        scale: { type: "spring", stiffness: 200, damping: 10 },
-        rotate: { type: "spring", stiffness: 150, damping: 5, duration: 0.6 },
-      },
-    },
-    exit: {
-      scale: 0,
-      rotate: 0,
-      transition: { duration: 0.3, ease: "easeInOut" },
-    },
-  } satisfies Variants;
 
   return (
     <div className="w-full">
@@ -52,7 +37,7 @@ const GaborProject = () => {
               <p
                 className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/50 hover:text-neutral-800 cursor-pointer select-none scale-y-[130%] hover:scale-y-[140%] ease-elastic uppercase"
                 onMouseEnter={() =>
-                  handleHoverStart(GABOR_PROJECT_SOURCE.write)
+                  handleHoverStart(GABOR_PROJECT_IMAGE_SOURCE.write)
                 }
                 onMouseLeave={handleHoverEnd}
               >
@@ -63,7 +48,7 @@ const GaborProject = () => {
               <p
                 className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/50 hover:text-neutral-800 cursor-pointer select-none scale-y-[130%] hover:scale-y-[140%] ease-elastic uppercase"
                 onMouseEnter={() =>
-                  handleHoverStart(GABOR_PROJECT_SOURCE.process)
+                  handleHoverStart(GABOR_PROJECT_IMAGE_SOURCE.process)
                 }
                 onMouseLeave={handleHoverEnd}
               >
@@ -72,7 +57,9 @@ const GaborProject = () => {
             </div>
             <div className="relative w-full flex flex-col justify-center items-center">
               <p
-                onMouseEnter={() => handleHoverStart(GABOR_PROJECT_SOURCE.burn)}
+                onMouseEnter={() =>
+                  handleHoverStart(GABOR_PROJECT_IMAGE_SOURCE.burn)
+                }
                 onMouseLeave={handleHoverEnd}
                 className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/50 hover:text-neutral-800 cursor-pointer select-none scale-y-[130%] hover:scale-y-[140%] ease-elastic uppercase"
               >
@@ -88,43 +75,77 @@ const GaborProject = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className=" top-0 left-0 pointer-events-none inset-0 w-full h-full absolute flex justify-center items-center"
             >
-              <motion.div
-                key="image-box-1"
-                className="absolute w-auto h-auto max-w-24 max-h-24 bg-white rounded-xl -top-10 left-4 -rotate-12 overflow-hidden border border-neutral-200 shadow-md"
-                variants={jiggleVariant}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <GaborProject.Image src={source[0].src} alt="write" />
-              </motion.div>
-              <motion.div
-                key="image-box-2"
-                className="absolute w-auto h-auto max-w-24 max-h-24 bg-white rounded-xl -top-32 left-1/2 -rotate-12 overflow-hidden border border-neutral-200 shadow-md"
-                variants={jiggleVariant}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <GaborProject.Image src={source[1].src} alt="process" />
-              </motion.div>
-              <motion.div
-                key="image-box-3"
-                className="absolute w-auto h-auto max-w-24 max-h-24 bg-white rounded-xl top-4 right-4 -rotate-12 overflow-hidden border border-neutral-200 shadow-md"
-                variants={jiggleVariant}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <GaborProject.Image src={source[2].src} alt="burn" />
-              </motion.div>
+              {source.map((image, i) => (
+                <GaborProject.ImageBox
+                  key={`image-box-${i}`}
+                  position={image.position}
+                >
+                  <GaborProject.Image src={image.src} alt={image.alt} />
+                </GaborProject.ImageBox>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </div>
+  );
+};
+
+GaborProject.ImageBox = ({
+  children,
+  position,
+}: {
+  children: React.ReactNode;
+  position: GABOR_PROJECT_IMAGE_POSITION;
+}) => {
+  const calculatedPosition = {
+    x: position.x + random(-10, 10),
+    y: position.y + random(-10, 10),
+  };
+
+  const animationVariant = {
+    initial: {
+      scale: 0,
+      rotate: random(0, 6),
+      x: position.x,
+      y: position.y,
+    },
+    animate: {
+      scale: 1,
+      rotate: random(-6, 6),
+      x: calculatedPosition.x,
+      y: calculatedPosition.y,
+
+      transition: {
+        scale: { type: "spring", stiffness: 200, damping: 10 },
+        rotate: { type: "spring", stiffness: 150, damping: 5, duration: 0.3 },
+        y: { type: "spring", stiffness: 150, damping: 8, duration: 0.3 },
+        x: { type: "spring", stiffness: 150, damping: 8, duration: 0.3 },
+      },
+    },
+    exit: {
+      scale: 0,
+      rotate: 0,
+      x: calculatedPosition.x,
+      y: calculatedPosition.y,
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
+  } satisfies Variants;
+
+  return (
+    <motion.div
+      suppressHydrationWarning
+      className="absolute w-auto h-auto min-w-12 min-h-12 max-w-24 max-h-24 bg-white rounded-xl overflow-hidden border border-neutral-200 shadow-md pointer-events-none"
+      variants={animationVariant}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
+      {children}
+    </motion.div>
   );
 };
 

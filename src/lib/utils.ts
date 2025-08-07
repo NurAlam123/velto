@@ -10,3 +10,11 @@ export function* range(start: number, end: number, step: number = 1) {
     yield i;
   }
 }
+
+export function random(min: number, max: number): number {
+  if (min > max) {
+    [min, max] = [max, min];
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
