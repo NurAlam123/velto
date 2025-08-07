@@ -27,7 +27,7 @@ export const GABOR_PROJECT_IMAGE_SOURCE: GABOR_PROJECT_IMAGE_SOURCE_TYPES = {
       alt: "Write 1",
       position: {
         x: -140,
-        y: 20,
+        y: -10,
       },
     },
     {

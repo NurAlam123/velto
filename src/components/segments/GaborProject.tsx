@@ -108,33 +108,35 @@ GaborProject.ImageBox = ({
   position: GABOR_PROJECT_IMAGE_POSITION;
 }) => {
   const calculatedPosition = {
-    x: position.x + random(-10, 10),
-    y: position.y + random(-10, 10),
+    x: position.x + random(-8, 8),
+    y: position.y + random(-8, 8),
   };
+
+  const roate = random(0, 6);
 
   const animationVariant = {
     initial: {
       scale: 0,
-      rotate: random(0, 6),
+      rotate: roate,
       x: position.x,
       y: position.y,
     },
     animate: {
       scale: 1,
-      rotate: random(-6, 6),
+      rotate: random(-6, 0),
       x: calculatedPosition.x,
       y: calculatedPosition.y,
 
       transition: {
         scale: { type: "spring", stiffness: 200, damping: 10 },
-        rotate: { type: "spring", stiffness: 150, damping: 5, duration: 0.3 },
-        y: { type: "spring", stiffness: 150, damping: 8, duration: 0.3 },
-        x: { type: "spring", stiffness: 150, damping: 8, duration: 0.3 },
+        rotate: { type: "spring", stiffness: 150, damping: 5, duration: 0.1 },
+        y: { type: "spring", stiffness: 150, damping: 10, duration: 0.1 },
+        x: { type: "spring", stiffness: 150, damping: 10, duration: 0.1 },
       },
     },
     exit: {
       scale: 0,
-      rotate: 0,
+      rotate: roate,
       x: calculatedPosition.x,
       y: calculatedPosition.y,
       transition: { duration: 0.3, ease: "easeInOut" },
