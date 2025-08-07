@@ -33,7 +33,11 @@ export default function Home() {
         >
           <Countdown />
         </Box>
-        <Box title="Gabor" badges={["click"]} date="Aug 08, 2025">
+        <Box
+          title="Spencer Gabor Project Section"
+          badges={["click"]}
+          date="Aug 08, 2025"
+        >
           <GaborProject />
         </Box>
       </div>
