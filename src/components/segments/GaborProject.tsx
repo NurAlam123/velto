@@ -7,7 +7,7 @@ import {
   GABOR_PROJECT_IMAGE_SOURCE_VALUES,
 } from "@/constants/gabor";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { random } from "@/lib/utils";
 
@@ -50,7 +50,7 @@ const GaborProject = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className=" top-0 left-0 pointer-events-none inset-0 w-full h-full absolute flex justify-center items-center"
+              className=" top-0 left-0 pointer-events-none inset-0 w-full h-full absolute flex justify-center items-center will-change-[opacity]"
             >
               {source.map((image, i) => (
                 <GaborProject.ImageBox
@@ -107,36 +107,39 @@ GaborProject.ImageBox = function GaborProjectImageBox({
   children: React.ReactNode;
   position: GABOR_PROJECT_IMAGE_POSITION;
 }) {
-  const calculatedPosition = {
-    x: position.x + random(-8, 8),
-    y: position.y + random(-8, 8),
-  };
+  const calculatedPosition = useMemo(
+    () => ({
+      x: position.x + random(-8, 8),
+      y: position.y + random(-8, 8),
+    }),
+    [position.x, position.y],
+  );
 
-  const roate = random(0, 6);
+  const rotate = random(0, 6);
 
   const animationVariant = {
     initial: {
       scale: 0,
-      rotate: roate,
+      rotate,
       x: position.x,
       y: position.y,
     },
     animate: {
       scale: 1,
-      rotate: random(-6, 0),
+      rotate: random(-6, 6),
       x: calculatedPosition.x,
       y: calculatedPosition.y,
 
       transition: {
-        scale: { type: "spring", stiffness: 200, damping: 10 },
-        rotate: { type: "spring", stiffness: 150, damping: 5, duration: 0.1 },
-        y: { type: "spring", stiffness: 150, damping: 10, duration: 0.1 },
-        x: { type: "spring", stiffness: 150, damping: 10, duration: 0.1 },
+        scale: { type: "spring", stiffness: 300, damping: 20 },
+        rotate: { type: "spring", stiffness: 200, damping: 15, duration: 0.1 },
+        x: { type: "spring", stiffness: 200, damping: 15, duration: 0.1 },
+        y: { type: "spring", stiffness: 200, damping: 15, duration: 0.1 },
       },
     },
     exit: {
       scale: 0,
-      rotate: roate,
+      rotate,
       x: calculatedPosition.x,
       y: calculatedPosition.y,
       transition: { duration: 0.3, ease: "easeInOut" },
@@ -146,7 +149,7 @@ GaborProject.ImageBox = function GaborProjectImageBox({
   return (
     <motion.div
       suppressHydrationWarning
-      className="absolute w-auto h-auto min-w-12 min-h-12 max-w-24 max-h-24 bg-white rounded-xl overflow-hidden border border-neutral-200 shadow-md pointer-events-none"
+      className="absolute w-auto h-auto min-w-12 min-h-12 max-w-24 max-h-24 bg-white rounded-xl overflow-hidden border border-neutral-200 shadow-md pointer-events-none will-change-[transform,opacity]"
       variants={animationVariant}
       initial="initial"
       animate="animate"
@@ -172,6 +175,7 @@ GaborProject.Image = function GaborProjectImage({
       height={96}
       className="object-cover w-full h-full"
       unoptimized={src.endsWith(".gif")}
+      priority={true}
     />
   );
 };

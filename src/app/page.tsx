@@ -35,7 +35,7 @@ export default function Home() {
         </Box>
         <Box
           title="Spencer Gabor Project Section"
-          badges={["click"]}
+          badges={["hover"]}
           date="Aug 08, 2025"
         >
           <GaborProject />
