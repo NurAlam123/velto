@@ -22,8 +22,12 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-4 pb-8 md:pb-32">
-        <Box title="Wallet" badges={["hover"]} date="Aug 03, 2025" versions={2}>
-          <Wallet />
+        <Box
+          title="Spencer Gabor Project Section"
+          badges={["hover"]}
+          date="Aug 08, 2025"
+        >
+          <GaborProject />
         </Box>
         <Box
           title="Countdown Timer"
@@ -33,12 +37,8 @@ export default function Home() {
         >
           <Countdown />
         </Box>
-        <Box
-          title="Spencer Gabor Project Section"
-          badges={["hover"]}
-          date="Aug 08, 2025"
-        >
-          <GaborProject />
+        <Box title="Wallet" badges={["hover"]} date="Aug 03, 2025" versions={2}>
+          <Wallet />
         </Box>
       </div>
     </div>

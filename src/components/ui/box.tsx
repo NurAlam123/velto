@@ -18,7 +18,7 @@ const Box = ({
   date?: string;
   versions?: number;
 } & HTMLProps<HTMLDivElement>) => {
-  const id = title.toLocaleLowerCase()?.replace(" ", "-");
+  const id = title.toLocaleLowerCase()?.replaceAll(" ", "-");
 
   return (
     <div className="h-full w-full relative" id={id}>

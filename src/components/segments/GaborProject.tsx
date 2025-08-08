@@ -90,7 +90,7 @@ GaborProject.Title = function GaborProjectTitle({
   return (
     <div className="relative w-full flex flex-col justify-start items-center">
       <p
-        className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-700 w-fit text-neutral-800/70 hover:text-neutral-800 cursor-pointer select-none scale-y-[115%] hover:scale-y-[125%] ease-elastic uppercase"
+        className="text-center contain-paint text-3xl/[1.1em] font-bold transition-[scale] duration-100 w-fit text-neutral-800/70 hover:text-neutral-800 cursor-pointer select-none scale-y-[115%] hover:scale-y-[125%] ease-elastic uppercase"
         onMouseEnter={() => handleHoverStart(source)}
         onMouseLeave={handleHoverEnd}
       >
@@ -142,7 +142,7 @@ GaborProject.ImageBox = function GaborProjectImageBox({
       rotate,
       x: calculatedPosition.x,
       y: calculatedPosition.y,
-      transition: { duration: 0.3, ease: "easeInOut" },
+      transition: { duration: 0.2, ease: "easeInOut" },
     },
   } satisfies Variants;
 
