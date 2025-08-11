@@ -21,7 +21,7 @@ export default function Home() {
           </a>
         </div>
       </div>
-      <div className="flex justify-center items-center flex-col gap-4 pb-8 md:pb-32">
+      <div className="flex justify-center items-center flex-col gap-8 md:gap-16 pb-8 md:pb-32">
         <Box
           title="Spencer Gabor Project Section"
           badges={["hover"]}

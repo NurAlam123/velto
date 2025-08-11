@@ -60,9 +60,9 @@ const Wallet = ({ version }: { version?: number }) => {
               <div className="text-black h-full rounded-3xl relative">
                 <div
                   className={cn(
-                    "w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-[#373736] to-[#515151] transition-transform duration-100 delay-[80ms] group-hover:delay-[0ms] ease-[[0.33,1,0.68,1]]",
+                    "w-full rounded-3xl h-24 p-2 absolute bg-gradient-to-br from-[#373736] to-[#515151] transition-transform duration-100 delay-[40ms] group-hover:delay-[40ms] ease-[[0.33,1,0.68,1]]",
                     version === 1 &&
-                      "group-hover:-translate-y-[60px] group-hover:-translate-x-[60px] group-hover:-rotate-[30deg]",
+                      "group-hover:-translate-y-[60px] group-hover:-translate-x-[60px] group-hover:-rotate-[26deg]",
                     version === 2 && "group-hover:-translate-y-[41px]",
                   )}
                 >
@@ -101,7 +101,7 @@ const Wallet = ({ version }: { version?: number }) => {
                   </div>
                 </div>
 
-                <div className="w-full rounded-3xl h-24 bg-gradient-to-br from-sky-400 to-blue-700 p-2 absolute top-8 group-hover:-translate-y-[26px] transition-transform duration-100 delay-[0ms] group-hover:delay-[80ms] ease-[[0.33,1,0.68,1]]">
+                <div className="w-full rounded-3xl h-24 bg-gradient-to-br from-sky-400 to-blue-700 p-2 absolute top-8 group-hover:-translate-y-[26px] transition-transform duration-100 delay-[20ms] group-hover:delay-[20ms] ease-[[0.33,1,0.68,1]]">
                   <Image
                     src="/logo/visa.svg"
                     alt="visa card"
