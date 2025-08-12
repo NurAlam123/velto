@@ -2,6 +2,26 @@
 
 import { cn, range } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
+import Image from "../ui/image";
+
+const source = [
+  {
+    src: "/carousel/bird-1.jpg",
+    alt: "bird-1",
+  },
+  {
+    src: "/carousel/forest-2.jpg",
+    alt: "forest-1",
+  },
+  {
+    src: "/carousel/forest-3.jpg",
+    alt: "forest-1",
+  },
+  {
+    src: "/carousel/forest-4.jpg",
+    alt: "forest-1",
+  },
+];
 
 const BlurCarousel = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -47,8 +67,14 @@ const BlurCarousel = () => {
           className="flex gap-4 items-center mx-auto min-w-max relative"
           ref={containerRef}
         >
-          {[...range(0, 6)].map((i) => (
-            <BlurCarousel.Card key={i} i={i} current={current} />
+          {source.map((image, i) => (
+            <BlurCarousel.Card
+              key={i}
+              index={i}
+              src={image.src}
+              alt={image.alt}
+              current={current}
+            />
           ))}
         </div>
       </div>
@@ -57,20 +83,30 @@ const BlurCarousel = () => {
 };
 
 BlurCarousel.Card = function BlurCarouselCard({
-  i,
+  src,
+  alt,
   current,
+  index,
 }: {
-  i: number;
+  src: string;
+  alt: string;
   current: number;
+  index: number;
 }) {
   return (
     <div
       className={cn(
-        "min-w-[288px] max-w-[288px] h-44 border-neutral-300 rounded-2xl bg-neutral-200 snap-center transition-all duration-500",
-        current === i && "bg-green-300 scale-100 blur-none",
+        "min-w-[288px] max-w-[288px] h-44 border-neutral-300 rounded-2xl bg-neutral-200 snap-center transition-all duration-100 overflow-hidden scale-95",
+        current === index && "scale-100 blur-none",
       )}
     >
-      <div className="select-none">Card {i}</div>
+      <Image
+        src={src}
+        alt={alt}
+        width={1024}
+        height={1024}
+        className="object-cover w-full h-full"
+      />
     </div>
   );
 };
