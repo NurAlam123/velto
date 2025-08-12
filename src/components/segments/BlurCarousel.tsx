@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, range } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import Image from "../ui/image";
 
@@ -30,25 +30,20 @@ const BlurCarousel = () => {
 
   const cardWidth = 288 + 16;
 
-  useEffect(() => {
-    if (!containerRef.current || !carouselRef.current) return;
+  const handleScrollEnd = () => {
+    if (!carouselRef.current) return;
 
-    const totalCard = Math.floor(containerRef.current.clientWidth / cardWidth);
-    const mid = Math.floor(totalCard / 2);
-    setCurrent(mid);
-    carouselRef.current.scrollLeft = cardWidth * mid;
-  }, [containerRef.current]);
-
-  useEffect(() => {
-    if (!carouselRef.current || !containerRef.current) return;
     const carousel = carouselRef.current;
 
-    const handleScrollEnd = () => {
-      const scrollLeft = carousel.scrollLeft;
-      const viewportCenter = scrollLeft + carousel.clientWidth / 2;
+    const scrollLeft = carousel.scrollLeft;
+    const centerPosition = scrollLeft + carousel.clientWidth / 2;
 
-      console.log(viewportCenter, scrollLeft);
-    };
+    const newCurrent = Math.round(centerPosition / cardWidth);
+    setCurrent(newCurrent);
+  };
+
+  useEffect(() => {
+    if (!carouselRef.current) return;
 
     carouselRef.current.addEventListener("scrollend", handleScrollEnd);
 
@@ -58,7 +53,7 @@ const BlurCarousel = () => {
 
   return (
     <div className="relative overflow-auto">
-      <div className="absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-[2px] pointer-events-none z-10 [mask-image:linear-gradient(to_right,black,black_16%,transparent_18%,transparent_82%,black_84%,black)]" />
+      {/* <div className="absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-[2px] pointer-events-none z-10 [mask-image:linear-gradient(to_right,black,black_16%,transparent_18%,transparent_82%,black_84%,black)]" /> */}
       <div
         ref={carouselRef}
         className="relative overflow-x-auto px-24 py-4 [scroll-snap-type:x_mandatory]"
@@ -96,8 +91,8 @@ BlurCarousel.Card = function BlurCarouselCard({
   return (
     <div
       className={cn(
-        "min-w-[288px] max-w-[288px] h-44 border-neutral-300 rounded-2xl bg-neutral-200 snap-center transition-all duration-100 overflow-hidden scale-95",
-        current === index && "scale-100 blur-none",
+        "min-w-[288px] max-w-[288px] h-44 border-neutral-300 rounded-2xl bg-neutral-200 snap-center transition-all duration-100 overflow-hidden scale-90",
+        current === index + 1 && "scale-100 blur-none",
       )}
     >
       <Image
