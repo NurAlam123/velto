@@ -3,6 +3,7 @@ import Box from "@/components/ui/box";
 import Image from "@/components/ui/image";
 import Wallet from "@/components/segments/wallet";
 import GaborProject from "@/components/segments/GaborProject";
+import BlurCarousel from "@/components/segments/BlurCarousel";
 
 export default function Home() {
   return (
@@ -22,6 +23,9 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-8 md:gap-16 pb-8 md:pb-32">
+        <Box title="Blur Carousel" badges={["click"]} date="Aug 11, 2025">
+          <BlurCarousel />
+        </Box>
         <Box
           title="Spencer Gabor Project Section"
           badges={["hover"]}
