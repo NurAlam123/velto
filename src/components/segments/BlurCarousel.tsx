@@ -113,6 +113,7 @@ const BlurCarousel = () => {
           "relative overflow-x-auto px-24 py-4 select-none",
           isDragging ? "cursor-grabbing" : "cursor-grab",
         )}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
