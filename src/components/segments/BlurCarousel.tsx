@@ -32,6 +32,7 @@ const BlurCarousel = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [cardDistances, setCardDistances] = useState<number[]>([]);
   const rafId = useRef<number>(0);
+  const isTouchDevice = useRef(false);
 
   const cardWidth = 288 + 16;
   const maxEffectDistance = cardWidth * 1.5;
@@ -69,7 +70,7 @@ const BlurCarousel = () => {
     setCurrent(closestIndex);
   }, []);
 
-  // dragging
+  // dragging - mouse
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!carouselRef.current) return;
 
@@ -106,6 +107,38 @@ const BlurCarousel = () => {
     }
   };
 
+  // dragging - touch
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!carouselRef.current) return;
+
+    isTouchDevice.current = true;
+    setIsDragging(true);
+    const touch = e.touches[0];
+    setStartX(touch.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !carouselRef.current) return;
+
+    const touch = e.touches[0];
+    const x = touch.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    if (!carouselRef.current) return;
+
+    setIsDragging(false);
+
+    const targetScroll = current * (cardWidth - 8);
+    carouselRef.current.scrollTo({
+      left: targetScroll,
+      behavior: "smooth",
+    });
+  };
+
   useEffect(() => {
     if (!carouselRef.current) return;
 
@@ -126,22 +159,28 @@ const BlurCarousel = () => {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-xs pointer-events-none z-10 [mask-image:linear-gradient(to_right,black_0%,black_14%,transparent_26%,transparent_82%,black_90%,black)] bg-white/10" />
+      <div className="max-md:hidden absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-xs pointer-events-none z-10 [mask-image:linear-gradient(to_right,black_0%,black_14%,transparent_26%,transparent_82%,black_90%,black)] bg-white/10" />
 
       <div
         ref={carouselRef}
         className={cn(
-          "relative overflow-x-auto px-24 py-4 select-none",
+          "relative overflow-x-auto px-4 md:px-24 py-4 select-none",
           isDragging ? "cursor-grabbing" : "cursor-grab",
         )}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        // mouse
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
+        // touch
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <div
-          className="flex gap-4 items-center mx-auto min-w-max relative"
+          className="flex gap-2 md:gap-4 items-center mx-auto min-w-max relative"
           ref={containerRef}
         >
           {source.map((image, i) => (
@@ -151,6 +190,7 @@ const BlurCarousel = () => {
               alt={image.alt}
               distance={cardDistances[i] ?? Infinity}
               maxEffectDistance={maxEffectDistance}
+              isTouchDevice={isTouchDevice.current}
             />
           ))}
         </div>
@@ -169,6 +209,7 @@ BlurCarousel.Card = function BlurCarouselCard({
   alt: string;
   distance: number;
   maxEffectDistance: number;
+  isTouchDevice: boolean;
 }) {
   const ratio = Math.min(distance / maxEffectDistance, 1);
 

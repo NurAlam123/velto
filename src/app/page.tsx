@@ -23,7 +23,11 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-8 md:gap-16 pb-8 md:pb-32">
-        <Box title="Blur Carousel" badges={["click"]} date="Aug 11, 2025">
+        <Box
+          title="Blur Carousel"
+          badges={["drag", "scroll"]}
+          date="Aug 14, 2025"
+        >
           <BlurCarousel />
         </Box>
         <Box
