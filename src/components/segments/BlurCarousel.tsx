@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "../ui/image";
 import { cn } from "@/lib/utils";
 
@@ -31,17 +31,20 @@ const BlurCarousel = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [cardDistances, setCardDistances] = useState<number[]>([]);
+  const rafId = useRef<number>(0);
 
   const cardWidth = 288 + 16;
+  const maxEffectDistance = cardWidth * 1.5;
 
   const calcDistance = useCallback(() => {
     if (!carouselRef.current || !containerRef.current) return;
 
     const carousel = carouselRef.current;
     const container = containerRef.current;
-    const carouselRect = carousel.getBoundingClientRect();
 
+    const carouselRect = carousel.getBoundingClientRect();
     const carouselCenter = carouselRect.left + carouselRect.width / 2;
+
     const cards = container.children;
     const distances: Array<number> = [];
 
@@ -103,9 +106,27 @@ const BlurCarousel = () => {
     }
   };
 
+  useEffect(() => {
+    if (!carouselRef.current) return;
+
+    calcDistance();
+    const carousel = carouselRef.current;
+
+    const handleScroll = () => {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = requestAnimationFrame(calcDistance);
+    };
+
+    carousel.addEventListener("scroll", handleScroll);
+    return () => {
+      carousel.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId.current);
+    };
+  }, [calcDistance]);
+
   return (
     <div className="relative overflow-hidden">
-      <div className="absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-xs pointer-events-none z-10 [mask-image:linear-gradient(to_right,black,black_18%,transparent_26%,transparent_80%,black_88%,black)] bg-white/10" />
+      <div className="absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-xs pointer-events-none z-10 [mask-image:linear-gradient(to_right,black_0%,black_14%,transparent_26%,transparent_82%,black_90%,black)] bg-white/10" />
 
       <div
         ref={carouselRef}
@@ -128,8 +149,8 @@ const BlurCarousel = () => {
               key={i}
               src={image.src}
               alt={image.alt}
-              index={i}
-              current={current}
+              distance={cardDistances[i] ?? Infinity}
+              maxEffectDistance={maxEffectDistance}
             />
           ))}
         </div>
@@ -141,20 +162,29 @@ const BlurCarousel = () => {
 BlurCarousel.Card = function BlurCarouselCard({
   src,
   alt,
-  current,
-  index,
+  distance,
+  maxEffectDistance,
 }: {
   src: string;
   alt: string;
-  index: number;
-  current: number;
+  distance: number;
+  maxEffectDistance: number;
 }) {
+  const ratio = Math.min(distance / maxEffectDistance, 1);
+
+  const scale = Math.round((1 - 0.2 * ratio + Number.EPSILON) * 100) / 100;
+  const blur = Math.round((8 * ratio + Number.EPSILON) * 100) / 100;
+
   return (
     <div
       className={cn(
-        "min-w-[288px] max-w-[288px] h-44 border-neutral-300 rounded-2xl bg-neutral-200 overflow-hidden transition-all duration-200 ease-out blur-xs scale-90",
-        current === index && "scale-100 blur-none",
+        "min-w-[288px] max-w-[288px] h-44 border-neutral-300 rounded-2xl bg-neutral-200 overflow-hidden transition-all duration-200 ease-out",
       )}
+      style={{
+        transform: `scale(${scale})`,
+        filter: `blur(${blur}px)`,
+        transition: "transform 0.2s ease-out",
+      }}
     >
       <Image
         src={src}
