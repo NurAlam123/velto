@@ -4,6 +4,7 @@ import Image from "@/components/ui/image";
 import Wallet from "@/components/segments/wallet";
 import GaborProject from "@/components/segments/GaborProject";
 import BlurCarousel from "@/components/segments/BlurCarousel";
+import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 
 export default function Home() {
   return (
@@ -23,6 +24,13 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-8 md:gap-16 pb-8 md:pb-32">
+        <Box
+          title="Progressive Input Stack"
+          badges={["click"]}
+          date="Aug 20, 2025"
+        >
+          <ProgressiveInputStack />
+        </Box>
         <Box
           title="Blur Carousel"
           badges={["drag", "scroll"]}
