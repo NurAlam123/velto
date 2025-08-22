@@ -58,6 +58,7 @@ const ProgressiveInputStack = () => {
               "bg-neutral-300 p-2 rounded-full overflow-hidden flex justify-center items-center shadow-xs cursor-pointer active:scale-[0.97] transition-all duration-150 ease-in-out origin-center",
               current <= MIN && "opacity-0 pointer-events-none blur-xs",
             )}
+            type="button"
             onClick={() => {
               if (current <= MIN) return;
               setCurrent(current - 1);
@@ -68,7 +69,7 @@ const ProgressiveInputStack = () => {
 
           <button
             className={cn(
-              "bg-black text-white rounded-full px-2.5 py-1.5 font-semibold cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none",
+              "bg-black text-white rounded-full px-2.5 py-1.5 font-semibold cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none overflow-hidden",
             )}
             type={current > MAX ? "submit" : "button"}
             onClick={() => {
@@ -78,7 +79,7 @@ const ProgressiveInputStack = () => {
             {current >= MAX ? (
               <div
                 className={cn(
-                  "flex justify-between items-center gap-0.5 transform transition-all duration-500 ease-in-out",
+                  "flex justify-between items-center gap-1 animate-slideup",
                 )}
               >
                 <Check />
