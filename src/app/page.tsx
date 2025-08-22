@@ -27,7 +27,7 @@ export default function Home() {
         <Box
           title="Progressive Input Stack"
           badges={["click"]}
-          date="Aug 20, 2025"
+          date="Aug 22, 2025"
         >
           <ProgressiveInputStack />
         </Box>

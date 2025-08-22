@@ -48,56 +48,32 @@ const ProgressiveInputStack = () => {
               <p className="text-sm font-medium text-neutral-500">
                 Send a reminder in 5 days
               </p>
-              <ProgressiveInputStack.ToggleButton name="daily-reminder" />
+              <ProgressiveInputStack.ToggleSwitch name="daily-reminder" />
             </div>
           </ProgressiveInputStack.Div>
         </div>
-        <div className="flex justify-between mt-4">
-          <button
-            className={cn(
-              "bg-neutral-300 p-2 rounded-full overflow-hidden flex justify-center items-center shadow-xs cursor-pointer active:scale-[0.97] transition-all duration-150 ease-in-out origin-center",
-              current <= MIN && "opacity-0 pointer-events-none blur-xs",
-            )}
-            type="button"
-            onClick={() => {
-              if (current <= MIN) return;
-              setCurrent(current - 1);
-            }}
-          >
-            <ArrowLeft className="stroke-black" />
-          </button>
 
-          <button
-            className={cn(
-              "bg-black text-white rounded-full px-2.5 py-1.5 font-semibold cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none overflow-hidden",
-            )}
-            type={current > MAX ? "submit" : "button"}
-            onClick={() => {
-              if (current <= MAX) setCurrent(current + 1);
-            }}
-          >
-            {current >= MAX ? (
-              <div
-                className={cn(
-                  "flex justify-between items-center gap-1 animate-slideup",
-                )}
-              >
-                <Check />
-                <span>Done</span>
-              </div>
-            ) : (
-              <div className="flex justify-between items-center gap-0.5">
-                Next <ArrowRight className="stroke-white" />
-              </div>
-            )}
-          </button>
+        <div className="flex justify-between mt-4">
+          <ProgressiveInputStack.PreviousButton
+            current={current}
+            MIN={MIN}
+            setCurrent={setCurrent}
+          />
+          <ProgressiveInputStack.NextButton
+            current={current}
+            MAX={MAX}
+            setCurrent={setCurrent}
+          />
         </div>
       </form>
     </div>
   );
 };
 
-ProgressiveInputStack.Div = function ProgressiveDiv({
+// ===========
+// Progressive Div
+// ===========
+ProgressiveInputStack.Div = function ProgressiveInputStackDiv({
   current,
   index,
   children,
@@ -135,6 +111,100 @@ ProgressiveInputStack.Div = function ProgressiveDiv({
   );
 };
 
+// ===========
+// Next and Previous Button
+// ===========
+//
+// Next Button
+ProgressiveInputStack.NextButton = function ProgressiveInputStackNextButton({
+  current,
+  setCurrent,
+  MAX,
+}: {
+  current: number;
+  setCurrent: (value: number) => void;
+  MAX: number;
+}) {
+  return (
+    <>
+      <style jsx>
+        {`
+          @keyframes slideUp {
+            0% {
+              transform: translateY(20px);
+              filter: blur(4px);
+              opacity: 0;
+            }
+            100% {
+              transform: translateY(0);
+              filter: blur(0px);
+              opacity: 1;
+            }
+          }
+          .animate-slideup {
+            animation: slideUp 0.1s ease-out forwards;
+          }
+        `}
+      </style>
+      <button
+        className={cn(
+          "bg-black text-white rounded-full px-2.5 py-1.5 font-semibold cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none overflow-hidden",
+        )}
+        type={current > MAX ? "submit" : "button"}
+        onClick={() => {
+          if (current <= MAX) setCurrent(current + 1);
+        }}
+      >
+        {current >= MAX ? (
+          <div
+            className={cn(
+              "flex justify-between items-center gap-1 animate-slideup",
+            )}
+          >
+            <Check />
+            <span>Done</span>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center gap-0.5">
+            Next <ArrowRight className="stroke-white" />
+          </div>
+        )}
+      </button>
+    </>
+  );
+};
+
+// Previous Button
+ProgressiveInputStack.PreviousButton =
+  function ProgressiveInputStackPreviousButton({
+    current,
+    setCurrent,
+    MIN,
+  }: {
+    current: number;
+    setCurrent: (value: number) => void;
+    MIN: number;
+  }) {
+    return (
+      <button
+        className={cn(
+          "bg-neutral-300 p-2 rounded-full overflow-hidden flex justify-center items-center shadow-xs cursor-pointer active:scale-[0.97] transition-all duration-150 ease-in-out origin-center",
+          current <= MIN && "opacity-0 pointer-events-none blur-xs",
+        )}
+        type="button"
+        onClick={() => {
+          if (current <= MIN) return;
+          setCurrent(current - 1);
+        }}
+      >
+        <ArrowLeft className="stroke-black" />
+      </button>
+    );
+  };
+
+// ======
+// Input Field
+// ======
 ProgressiveInputStack.Input = function ProgressiveInput({
   className,
   ...props
@@ -150,7 +220,10 @@ ProgressiveInputStack.Input = function ProgressiveInput({
   );
 };
 
-ProgressiveInputStack.ToggleButton = function ProgressiveToggleButton({
+// ======
+// Toggle Switch
+// ======
+ProgressiveInputStack.ToggleSwitch = function ProgressiveToggleSwitch({
   name,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
@@ -178,7 +251,9 @@ ProgressiveInputStack.ToggleButton = function ProgressiveToggleButton({
   );
 };
 
+// ======
 // Icons
+// ======
 const ArrowRight = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
