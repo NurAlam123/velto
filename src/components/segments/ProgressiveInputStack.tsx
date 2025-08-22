@@ -22,6 +22,7 @@ const ProgressiveInputStack = () => {
     const formData = new FormData(form);
     console.log("Demo submit");
     console.log(formData);
+    form.reset();
   };
 
   return (
