@@ -1,7 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { HTMLAttributes, SVGProps, useState } from "react";
+import {
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  SVGProps,
+  useState,
+} from "react";
 
 const ProgressiveInputStack = () => {
   const [current, setCurrent] = useState(1);
@@ -29,8 +34,11 @@ const ProgressiveInputStack = () => {
             />
           </ProgressiveInputStack.Div>
           <ProgressiveInputStack.Div current={current} index={2}>
-            <div>
-              <p>Send a reminder in 5 days</p>
+            <div className="flex justify-between w-full">
+              <p className="text-sm font-medium text-neutral-500">
+                Send a reminder in 5 days
+              </p>
+              <ProgressiveInputStack.ToggleButton />
             </div>
           </ProgressiveInputStack.Div>
         </div>
@@ -84,7 +92,7 @@ ProgressiveInputStack.Div = function ProgressiveDiv({
   return (
     <div
       className={cn(
-        "first:relative absolute transition-all duration-200 ease-in-out blur-none",
+        "first:relative absolute transition-all duration-200 ease-in-out blur-none border-2 border-neutral-200 rounded-lg px-4 py-2  bg-neutral-50 w-full min-h-10 max-h-12 flex justify-between items-center",
         (!isVisible || hide) && "opacity-0 pointer-events-none blur-sm",
         overflow && "opacity-0 translate-y-6",
       )}
@@ -107,11 +115,36 @@ ProgressiveInputStack.Input = function ProgressiveInput({
   return (
     <input
       className={cn(
-        "border-2 border-neutral-200 rounded-lg px-4 py-2 outline-none ring-0 font-medium bg-neutral-50 selection:bg-neutral-400",
+        "outline-none ring-0 font-medium selection:bg-neutral-400",
         className,
       )}
       {...props}
     />
+  );
+};
+
+ProgressiveInputStack.ToggleButton = function ProgressiveToggleButton({
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  const [on, setOn] = useState(false);
+
+  return (
+    <button
+      className={cn(
+        "bg-neutral-300 w-8 max-w-8 rounded-full p-0.5 cursor-pointer relative flex items-center",
+        on && "bg-green-500",
+      )}
+      {...props}
+      aria-label="toggle"
+      onClick={() => setOn(!on)}
+    >
+      <div
+        className={cn(
+          "w-4 h-full bg-white rounded-full translate-x-0 transition-all duration-200 ease-in-out",
+          on && "translate-x-[0.675rem]",
+        )}
+      ></div>
+    </button>
   );
 };
 
