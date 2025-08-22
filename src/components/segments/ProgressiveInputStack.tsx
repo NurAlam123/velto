@@ -14,10 +14,20 @@ const ProgressiveInputStack = () => {
   const MIN = 1;
   const MAX = 3;
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setCurrent(MIN);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    console.log("Demo submit");
+    console.log(formData);
+  };
+
   return (
     <div className="flex items-start justify-center flex-col">
       <p className="text-xl font-bold">Invite a friend</p>
-      <div className="mt-5 flex flex-col">
+      <form className="mt-5 flex flex-col" onSubmit={handleSubmit}>
         <div className="flex flex-col relative">
           <ProgressiveInputStack.Div current={current} index={0}>
             <ProgressiveInputStack.Input
@@ -38,7 +48,7 @@ const ProgressiveInputStack = () => {
               <p className="text-sm font-medium text-neutral-500">
                 Send a reminder in 5 days
               </p>
-              <ProgressiveInputStack.ToggleButton />
+              <ProgressiveInputStack.ToggleButton name="daily-reminder" />
             </div>
           </ProgressiveInputStack.Div>
         </div>
@@ -55,17 +65,33 @@ const ProgressiveInputStack = () => {
           >
             <ArrowLeft className="stroke-black" />
           </button>
+
           <button
-            className="bg-black text-white rounded-full px-2.5 py-1.5 font-semibold flex justify-between items-center gap-0.5 cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none"
+            className={cn(
+              "bg-black text-white rounded-full px-2.5 py-1.5 font-semibold cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none",
+            )}
+            type={current > MAX ? "submit" : "button"}
             onClick={() => {
-              if (current >= MAX) return;
-              setCurrent(current + 1);
+              if (current <= MAX) setCurrent(current + 1);
             }}
           >
-            Next <ArrowRight className="stroke-white" />
+            {current >= MAX ? (
+              <div
+                className={cn(
+                  "flex justify-between items-center gap-0.5 transform transition-all duration-500 ease-in-out",
+                )}
+              >
+                <Check />
+                <span>Done</span>
+              </div>
+            ) : (
+              <div className="flex justify-between items-center gap-0.5">
+                Next <ArrowRight className="stroke-white" />
+              </div>
+            )}
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
@@ -92,7 +118,7 @@ ProgressiveInputStack.Div = function ProgressiveDiv({
   return (
     <div
       className={cn(
-        "first:relative absolute transition-all duration-200 ease-in-out blur-none border-2 border-neutral-200 rounded-lg px-4 py-2  bg-neutral-50 w-full min-h-10 max-h-12 flex justify-between items-center",
+        "first:relative absolute transition-all duration-300 ease-in-out blur-none border-2 border-neutral-200 rounded-xl px-4 py-2  bg-neutral-50 w-full min-h-10 max-h-12 flex justify-between items-center",
         (!isVisible || hide) && "opacity-0 pointer-events-none blur-sm",
         overflow && "opacity-0 translate-y-6",
       )}
@@ -124,6 +150,7 @@ ProgressiveInputStack.Input = function ProgressiveInput({
 };
 
 ProgressiveInputStack.ToggleButton = function ProgressiveToggleButton({
+  name,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
   const [on, setOn] = useState(false);
@@ -137,11 +164,13 @@ ProgressiveInputStack.ToggleButton = function ProgressiveToggleButton({
       {...props}
       aria-label="toggle"
       onClick={() => setOn(!on)}
+      type="button"
     >
+      <input type="checkbox" checked={on} readOnly name={name} hidden />
       <div
         className={cn(
           "w-4 h-full bg-white rounded-full translate-x-0 transition-all duration-200 ease-in-out",
-          on && "translate-x-[0.675rem]",
+          on && "translate-x-[0.725rem]",
         )}
       ></div>
     </button>
@@ -185,6 +214,25 @@ const ArrowLeft = (props: SVGProps<SVGSVGElement>) => {
     >
       <path d="M6 8L2 12L6 16" />
       <path d="M2 12H22" />
+    </svg>
+  );
+};
+
+const Check = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M20 6 9 17l-5-5" />
     </svg>
   );
 };
