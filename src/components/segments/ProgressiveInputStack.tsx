@@ -1,42 +1,58 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { SVGProps, useState } from "react";
+import { HTMLAttributes, SVGProps, useState } from "react";
 
 const ProgressiveInputStack = () => {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(1);
+
+  const MIN = 1;
+  const MAX = 3;
 
   return (
     <div className="flex items-start justify-center flex-col">
       <p className="text-xl font-bold">Invite a friend</p>
-      <div className="mt-6 flex flex-col">
+      <div className="mt-5 flex flex-col">
         <div className="flex flex-col relative">
-          <ProgressiveInputStack.Input
-            data-index="0"
-            placeholder="Friend name"
-            className="scale-90 -translate-y-3"
-          />
-          <ProgressiveInputStack.Input
-            data-index="1"
-            placeholder="Friend email"
-            className="absolute -translate-y-1.5 scale-95"
-          />
-          <ProgressiveInputStack.Input
-            data-index="2"
-            placeholder="Friend sele"
-            className="absolute"
-          />
+          <ProgressiveInputStack.Div current={current} index={0}>
+            <ProgressiveInputStack.Input
+              type="text"
+              placeholder="Friend's Name"
+              name="friend-name"
+            />
+          </ProgressiveInputStack.Div>
+          <ProgressiveInputStack.Div current={current} index={1}>
+            <ProgressiveInputStack.Input
+              placeholder="Friend's Email"
+              name="friend-email"
+              type="email"
+            />
+          </ProgressiveInputStack.Div>
+          <ProgressiveInputStack.Div current={current} index={2}>
+            <div>
+              <p>Send a reminder in 5 days</p>
+            </div>
+          </ProgressiveInputStack.Div>
         </div>
         <div className="flex justify-between mt-4">
           <button
-            className="bg-neutral-300 p-2 rounded-full overflow-hidden flex justify-center items-center shadow-xs"
-            onClick={() => setCurrent(current - 1)}
+            className={cn(
+              "bg-neutral-300 p-2 rounded-full overflow-hidden flex justify-center items-center shadow-xs cursor-pointer active:scale-[0.97] transition-all duration-150 ease-in-out origin-center",
+              current <= MIN && "opacity-0 pointer-events-none blur-xs",
+            )}
+            onClick={() => {
+              if (current <= MIN) return;
+              setCurrent(current - 1);
+            }}
           >
             <ArrowLeft className="stroke-black" />
           </button>
           <button
-            className="bg-black text-white rounded-full px-2.5 py-1.5 font-semibold flex justify-between items-center gap-0.5 cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow"
-            onClick={() => setCurrent(current + 1)}
+            className="bg-black text-white rounded-full px-2.5 py-1.5 font-semibold flex justify-between items-center gap-0.5 cursor-pointer active:scale-[0.97] transition-all duration-100 ease-out origin-center hover:bg-black/80 shadow blur-none"
+            onClick={() => {
+              if (current >= MAX) return;
+              setCurrent(current + 1);
+            }}
           >
             Next <ArrowRight className="stroke-white" />
           </button>
@@ -46,14 +62,52 @@ const ProgressiveInputStack = () => {
   );
 };
 
-ProgressiveInputStack.Input = function Input({
+ProgressiveInputStack.Div = function ProgressiveDiv({
+  current,
+  index,
+  children,
+  ...props
+}: {
+  current: number;
+  index: number;
+} & HTMLAttributes<HTMLDivElement>) {
+  const relativeIndex = current - index - 1;
+  const y = 0.375 + 0.5 * relativeIndex;
+  const scale = relativeIndex >= 0 ? 1 - relativeIndex * 0.05 : 1.1;
+
+  const isVisible = index <= current - 1;
+
+  const maxVisible = 3;
+  const hide = index < current - maxVisible;
+  const overflow = index >= current + maxVisible - 1;
+
+  return (
+    <div
+      className={cn(
+        "first:relative absolute transition-all duration-200 ease-in-out blur-none",
+        (!isVisible || hide) && "opacity-0 pointer-events-none blur-sm",
+        overflow && "opacity-0 translate-y-6",
+      )}
+      style={{
+        transform: !isVisible ? "translateY(10px)" : `translateY(-${y}rem)`,
+        scale,
+        zIndex: current - 1 === index ? 10 : 0,
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+ProgressiveInputStack.Input = function ProgressiveInput({
   className,
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       className={cn(
-        "border-2 border-neutral-200 rounded-lg px-2 py-2 outline-none ring-0 font-medium bg-neutral-50 selection:bg-neutral-400",
+        "border-2 border-neutral-200 rounded-lg px-4 py-2 outline-none ring-0 font-medium bg-neutral-50 selection:bg-neutral-400",
         className,
       )}
       {...props}
