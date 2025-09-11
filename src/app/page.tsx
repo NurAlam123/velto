@@ -5,6 +5,7 @@ import Wallet from "@/components/segments/wallet";
 import GaborProject from "@/components/segments/GaborProject";
 import BlurCarousel from "@/components/segments/BlurCarousel";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
+import TabToggler from "@/components/segments/TabToggler";
 
 export default function Home() {
   return (
@@ -24,6 +25,10 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-8 md:gap-16 pb-8 md:pb-32">
+        <Box title="Tab Toggler" badges={["click"]} date="September 11, 2025">
+          <TabToggler />
+        </Box>
+
         <Box
           title="Progressive Input Stack"
           badges={["click"]}
