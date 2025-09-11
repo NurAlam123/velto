@@ -14,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} antialiased font-montserrat`}>
+      <body
+        className={`${montserrat.variable} antialiased font-montserrat`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
