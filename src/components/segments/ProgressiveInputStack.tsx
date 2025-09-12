@@ -233,7 +233,7 @@ ProgressiveInputStack.ToggleSwitch = function ProgressiveToggleSwitch({
   return (
     <button
       className={cn(
-        "bg-neutral-300 w-8 max-w-8 rounded-full p-0.5 cursor-pointer relative flex items-center",
+        "bg-neutral-300 w-8 max-w-8 min-h-5 h-5 max-h-5 rounded-full p-0.5 cursor-pointer relative flex items-center",
         on && "bg-green-500",
       )}
       {...props}
