@@ -1,17 +1,17 @@
 "use client";
 
-import useDevice from "@/hooks/useDevice";
 import Image from "@/components/ui/image";
 import { Skeleton } from "../ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useBrowser } from "@/hooks/useBrowser";
 
 const Wallet = ({ version }: { version?: number }) => {
   const [selectedColor, setSelectedColor] = useState<"black" | "amber">(
     "black",
   );
 
-  const device = useDevice();
+  const browser = useBrowser();
 
   return (
     <div>
@@ -29,7 +29,7 @@ const Wallet = ({ version }: { version?: number }) => {
       </div>
 
       <div className="h-full w-full flex justify-center items-center">
-        {!device ? (
+        {!browser ? (
           <Skeleton className="h-36 w-36 rounded-4xl" />
         ) : (
           <div
@@ -43,7 +43,7 @@ const Wallet = ({ version }: { version?: number }) => {
             <div
               className="bg-inherit w-full h-16 absolute z-1 bottom-0 rounded-br-4xl rounded-bl-4xl overflow-hidden bg-blend-multiply"
               style={{
-                clipPath: `path("M0,0 H174 v144 H0 Z ${device === "mobile" ? "M24,0" : "M25,0"} c 10,-0 19,6 24,14 18,27 38,20 50,0 6,-12 10,-15 43,-15 Z")`,
+                clipPath: `path("M0,0 H174 v144 H0 Z ${browser === "chrome" ? "M24,0" : "M32,0"} c 10,-0 19,6 24,14 18,27 38,20 50,0 6,-12 10,-15 43,-15 Z")`,
               }}
             >
               <div
