@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col gap-8 md:gap-16 pb-8 md:pb-32">
-        <Box title="Tab Toggler" badges={["click"]} date="September 11, 2025">
+        <Box title="Tab Toggler" badges={["click"]} date="Sep 11, 2025">
           <TabToggler />
         </Box>
 

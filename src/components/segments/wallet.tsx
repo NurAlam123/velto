@@ -43,7 +43,7 @@ const Wallet = ({ version }: { version?: number }) => {
             <div
               className="bg-inherit w-full h-16 absolute z-1 bottom-0 rounded-br-4xl rounded-bl-4xl overflow-hidden bg-blend-multiply"
               style={{
-                clipPath: `path("M0,0 H174 v144 H0 Z ${device === "mobile" ? "M24,0" : "M32,0"} c 10,-0 19,6 24,14 18,27 38,20 50,0 6,-12 10,-15 43,-15 Z")`,
+                clipPath: `path("M0,0 H174 v144 H0 Z ${device === "mobile" ? "M24,0" : "M25,0"} c 10,-0 19,6 24,14 18,27 38,20 50,0 6,-12 10,-15 43,-15 Z")`,
               }}
             >
               <div

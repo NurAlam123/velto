@@ -159,12 +159,12 @@ const BlurCarousel = () => {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="max-md:hidden absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-xs pointer-events-none z-10 [mask-image:linear-gradient(to_right,black_0%,black_14%,transparent_26%,transparent_82%,black_90%,black)] bg-white/10" />
+      <div className="max-md:hidden absolute inset-x-0 left-0 top-1/2 -translate-y-1/2 h-full backdrop-blur-xs pointer-events-none z-10 [mask-image:linear-gradient(to_right,black_0%,black_10%,transparent_20%,transparent_89%,black_90%,black)] bg-white/10" />
 
       <div
         ref={carouselRef}
         className={cn(
-          "relative overflow-x-auto px-4 md:px-24 py-4 select-none",
+          "relative overflow-x-auto px-4 md:px-18 py-4 select-none",
           isDragging ? "cursor-grabbing" : "cursor-grab",
         )}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
