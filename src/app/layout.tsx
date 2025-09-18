@@ -4,7 +4,8 @@ import { montserrat } from "@/fonts";
 
 export const metadata: Metadata = {
   title: "Velto",
-  description: "Velto is a collection of random ui",
+  description:
+    "A collection of interactive UI components and micro-interactions",
 };
 
 export default function RootLayout({
