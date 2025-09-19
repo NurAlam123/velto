@@ -39,7 +39,7 @@ const SetStatus = () => {
               </div>
             </>
           ) : (
-            <div className="[animation:popin_0.2s_forwards_ease-in-out]">
+            <div className="[animation:popin_0.15s_forwards_ease-in-out]">
               {typeof selectedItem.icon === "string" ? (
                 selectedItem.icon
               ) : (
@@ -50,12 +50,12 @@ const SetStatus = () => {
         </div>
         <div className="text-neutral-600 font-semibold">
           {!selectedItem ? (
-            <p className="[animation:slideUp_0.2s_forwards_ease-in-out]">
+            <p className="[animation:slideUp_0.15s_forwards_ease-in-out]">
               Set Status
             </p>
           ) : (
             <div className="flex gap-2 items-center">
-              <p className="[animation:slideUp_0.2s_forwards_ease-in-out]">
+              <p className="[animation:slideUp_0.15s_forwards_ease-in-out]">
                 {selectedItem.title}
               </p>
               <p
@@ -94,7 +94,7 @@ SetStatus.Item = function SetStatusItem({
   return (
     <div className="group">
       <div>
-        <div className="absolute -top-10 w-fit text-xs bg-neutral-200 px-2 py-1 rounded-full font-medium opacity-0 group-hover:[animation:popin_0.3s_forwards_ease-in-out] ease-in-out [animation:popout_0.3s_forwards_ease-in-out] translate-x-2">
+        <div className="absolute -top-10 w-fit text-xs bg-neutral-200 px-2 py-1 rounded-full font-medium opacity-0 group-hover:[animation:popin_0.2s_forwards_ease-in-out] ease-in-out [animation:popout_0.2s_forwards_ease-in-out] translate-x-2">
           <div className="w-3 h-3 rounded-full bg-neutral-200 absolute top-5 left-4"></div>
           <div className="w-2 h-2 rounded-full bg-neutral-200 absolute top-7.5"></div>
           <div className=" whitespace-nowrap overflow-hidden">

@@ -18,7 +18,7 @@ export const interactions: Array<InteractionsType> = [
   {
     id: 7,
     title: "Set Status",
-    badges: ["click"],
+    badges: ["click", "hover"],
     date: "Sep 19, 2025",
     component: SetStatus,
   },
