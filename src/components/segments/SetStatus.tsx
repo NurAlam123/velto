@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const SetStatus = () => {
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string>("");
+  const [selectedItem, setSelectedItem] = useState<StatusType | null>(null);
 
   const toggleOpen = () => setOpen(!open);
 
@@ -18,7 +18,12 @@ const SetStatus = () => {
         )}
       >
         {status.map((item) => (
-          <SetStatus.Item key={item.title} {...item}></SetStatus.Item>
+          <SetStatus.Item
+            key={item.title}
+            {...item}
+            toggleOpen={toggleOpen}
+            setSelectedItem={setSelectedItem}
+          ></SetStatus.Item>
         ))}
       </div>
 
@@ -26,12 +31,41 @@ const SetStatus = () => {
         className="bg-neutral-200 px-4 py-2 rounded-full flex items-center gap-2 shadow-xs cursor-pointer active:scale-[98%] transition-all select-none ease-in-out duration-300"
         onClick={toggleOpen}
       >
-        <div className="w-4 h-4 border border-dashed rounded-full relative border-neutral-500">
-          <div className="w-2 h-2 border border-neutral-500 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+        <div>
+          {!selectedItem ? (
+            <>
+              <div className="w-4 h-4 border border-dashed rounded-full relative border-neutral-500">
+                <div className="w-2 h-2 border border-neutral-500 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+              </div>
+            </>
+          ) : (
+            <div className="[animation:popin_0.2s_forwards_ease-in-out]">
+              {selectedItem.icon}
+            </div>
+          )}
         </div>
-        <p className="text-neutral-600 font-semibold">
-          {!selectedItem ? "Set Status" : selectedItem}
-        </p>
+        <div className="text-neutral-600 font-semibold">
+          {!selectedItem ? (
+            <p className="[animation:slideUp_0.2s_forwards_ease-in-out]">
+              Set Status
+            </p>
+          ) : (
+            <div className="flex gap-2 items-center">
+              <p className="[animation:slideUp_0.2s_forwards_ease-in-out]">
+                {selectedItem.title}
+              </p>
+              <p
+                className="rounded-full size-5 flex items-center justify-center bg-neutral-300 p-1 hover:bg-neutral-400 transition-all"
+                onClick={() => {
+                  setSelectedItem(null);
+                }}
+              >
+                <Close className="size-4" />
+              </p>
+            </div>
+          )}
+          {/* {!selectedItem ? "Set Status" : selectedItem.title} */}
+        </div>
       </div>
     </div>
   );
@@ -40,41 +74,23 @@ const SetStatus = () => {
 SetStatus.Item = function SetStatusItem({
   icon,
   title,
+  setSelectedItem,
+  toggleOpen,
   ...props
-}: { icon: string; title: string } & React.HTMLProps<HTMLDivElement>) {
+}: {
+  icon: string;
+  title: string;
+  setSelectedItem: (value: StatusType) => void;
+  toggleOpen: () => void;
+} & React.HTMLProps<HTMLDivElement>) {
+  const selectItem = (value: StatusType) => {
+    setSelectedItem(value);
+    toggleOpen();
+  };
+
   return (
     <div className="group">
       <div>
-        <style jsx>
-          {`
-            @keyframes popin {
-              0% {
-                opacity: 0;
-                transform: scale(0.8);
-                filter: blur(4px);
-              }
-              100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-              }
-            }
-
-            @keyframes popout {
-              0% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-              }
-              100% {
-                opacity: 0;
-                transform: scale(0.8);
-                filter: blur(4px);
-              }
-            }
-          `}
-        </style>
-
         <div className="absolute -top-10 w-fit text-xs bg-neutral-200 px-2 py-1 rounded-full font-medium opacity-0 group-hover:[animation:popin_0.3s_forwards_ease-in-out] ease-in-out [animation:popout_0.3s_forwards_ease-in-out] translate-x-2">
           <div className="w-3 h-3 rounded-full bg-neutral-200 absolute top-5 left-4"></div>
           <div className="w-2 h-2 rounded-full bg-neutral-200 absolute top-7.5"></div>
@@ -86,7 +102,12 @@ SetStatus.Item = function SetStatusItem({
 
       <div
         className="w-fit h-fit min-w-8 min-h-8 p-1 bg-neutral-200 flex items-center justify-center rounded-full select-none group-hover:-translate-y-0.5 transition-transform ease-out duration-200"
-        onClick={() => setOpen}
+        onClick={() =>
+          selectItem({
+            icon,
+            title,
+          })
+        }
         {...props}
       >
         {icon}
@@ -95,7 +116,32 @@ SetStatus.Item = function SetStatusItem({
   );
 };
 
-const status = [
+const Close = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#fff"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      {...props}
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  );
+};
+
+type StatusType = {
+  icon: string;
+  title: string;
+};
+const status: StatusType[] = [
   {
     icon: "🫡",
     title: "Salute you",
