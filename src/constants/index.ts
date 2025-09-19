@@ -2,6 +2,7 @@ import BlurCarousel from "@/components/segments/BlurCarousel";
 import Countdown from "@/components/segments/countdown";
 import GaborProject from "@/components/segments/GaborProject";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
+import SetStatus from "@/components/segments/SetStatus";
 import TabToggler from "@/components/segments/TabToggler";
 import Wallet from "@/components/segments/wallet";
 
@@ -14,6 +15,13 @@ export type InteractionsType = {
   component: React.ComponentType;
 };
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 7,
+    title: "Set Status",
+    badges: ["click"],
+    date: "Sep 19, 2025",
+    component: SetStatus,
+  },
   {
     id: 6,
     title: "Tab Toggler",
