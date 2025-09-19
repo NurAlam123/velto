@@ -25,7 +25,7 @@ export default function Home() {
 
       <div className="max-w-md mx-auto px-4 pb-8">
         <p className="text-base md:text-xl pb-1 md:pb-2">
-          Hi, I'm{" "}
+          Hi, I&apos;m{" "}
           <a
             href="https://github.com/nuralam123"
             target="_blank"
