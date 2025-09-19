@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const SetStatus = () => {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,11 @@ const SetStatus = () => {
             </>
           ) : (
             <div className="[animation:popin_0.2s_forwards_ease-in-out]">
-              {selectedItem.icon}
+              {typeof selectedItem.icon === "string" ? (
+                selectedItem.icon
+              ) : (
+                <selectedItem.icon />
+              )}
             </div>
           )}
         </div>
@@ -64,7 +68,6 @@ const SetStatus = () => {
               </p>
             </div>
           )}
-          {/* {!selectedItem ? "Set Status" : selectedItem.title} */}
         </div>
       </div>
     </div>
@@ -72,13 +75,13 @@ const SetStatus = () => {
 };
 
 SetStatus.Item = function SetStatusItem({
-  icon,
+  icon: Icon,
   title,
   setSelectedItem,
   toggleOpen,
   ...props
 }: {
-  icon: string;
+  icon: string | React.ComponentType;
   title: string;
   setSelectedItem: (value: StatusType) => void;
   toggleOpen: () => void;
@@ -104,13 +107,13 @@ SetStatus.Item = function SetStatusItem({
         className="w-fit h-fit min-w-8 min-h-8 p-1 bg-neutral-200 flex items-center justify-center rounded-full select-none group-hover:-translate-y-0.5 transition-transform ease-out duration-200"
         onClick={() =>
           selectItem({
-            icon,
+            icon: Icon,
             title,
           })
         }
         {...props}
       >
-        {icon}
+        {typeof Icon === "string" ? Icon : <Icon />}
       </div>
     </div>
   );
@@ -138,29 +141,38 @@ const Close = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
 };
 
 type StatusType = {
-  icon: string;
+  icon: string | React.ComponentType;
   title: string;
 };
+
 const status: StatusType[] = [
   {
-    icon: "🫡",
-    title: "Salute you",
+    icon: "🌞",
+    title: "Sunny vibes",
   },
   {
-    icon: "😀",
-    title: "Be happy",
+    icon: "🤔",
+    title: "Thinking...",
   },
   {
-    icon: "😇",
-    title: "Pleased",
+    icon: "🌪️",
+    title: "Tornado mode",
   },
   {
-    icon: "🫠",
-    title: "Melting",
+    icon: "😴",
+    title: "Half asleep",
   },
   {
-    icon: "😗",
-    title: "AHHHH",
+    icon: "🥳",
+    title: "Let’s go!",
+  },
+  {
+    icon: "👀",
+    title: "Weekend mode",
+  },
+  {
+    icon: "🙃",
+    title: "Why not?",
   },
 ];
 
