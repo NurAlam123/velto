@@ -3,6 +3,7 @@ import Countdown from "@/components/segments/countdown";
 import GaborProject from "@/components/segments/GaborProject";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 import SetStatus from "@/components/segments/SetStatus";
+import ShowQR from "@/components/segments/ShowQR";
 import TabToggler from "@/components/segments/TabToggler";
 import Wallet from "@/components/segments/wallet";
 
@@ -15,6 +16,13 @@ export type InteractionsType = {
   component: React.ComponentType;
 };
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 8,
+    title: "Show QR",
+    badges: ["click"],
+    date: "Sep 22, 2025",
+    component: ShowQR,
+  },
   {
     id: 7,
     title: "Set Status",
