@@ -4,15 +4,23 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 
 const ShowQR = () => {
+  const URL = "https://youtu.be/dQw4w9WgXcQ";
   const [expend, setExpend] = useState(false);
   const [showCode, setShowCode] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copy = () => {
+    window.navigator.clipboard.writeText(URL);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+  };
 
   useEffect(() => {
     if (!expend) return;
 
     setTimeout(() => {
       setShowCode(true);
-    }, 500);
+    }, 200);
   }, [expend]);
 
   return (
@@ -35,6 +43,17 @@ const ShowQR = () => {
             filter: blur(0px);
           }
         }
+
+        @keyframes focus-in {
+          0% {
+            scale: 110%;
+            filter: blur(4px);
+          }
+          100% {
+            scale: 100%;
+            filter: blur(0px);
+          }
+        }
       `}</style>
       <div className="relative w-fit h-fit">
         <div
@@ -45,8 +64,8 @@ const ShowQR = () => {
           )}
           style={{
             animation: !expend
-              ? "expend 0.5s forwards reverse ease-in-out"
-              : "expend 0.5s forwards normal ease-in-out",
+              ? "expend 0.3s forwards reverse ease-in-out"
+              : "expend 0.2s forwards normal ease-out",
           }}
         >
           {!expend ? (
@@ -62,18 +81,33 @@ const ShowQR = () => {
           ) : (
             <div className="px-4 py-4 h-full">
               {showCode && (
-                <div>
+                <div className="[animation:focus-in_0.2s_forwards_ease-in-out]">
                   <div className="w-full h-56 border mb-1 rounded-2xl flex justify-center items-center">
                     QR CODE
                   </div>
                   <div className="flex items-center justify-between gap-1">
-                    <button className="bg-white px-4 py-1 w-full rounded-full font-medium">
-                      Copy Link
+                    <button
+                      className="bg-white px-4 py-2 w-full rounded-full font-semibold flex items-center justify-center gap-1 ring-0 outline-none cursor-pointer overflow-hidden text-sm"
+                      onClick={copy}
+                    >
+                      <LinkIcon className="size-4" />
+                      {!copied ? (
+                        <span className="[animation:slideUp_0.3s]" key="copy">
+                          Copy Link
+                        </span>
+                      ) : (
+                        <span className="[animation:slideUp_0.3s]" key="copied">
+                          Copied Link
+                        </span>
+                      )}
                     </button>
 
                     <button
-                      className="h-full p-1 bg-white rounded-full"
-                      onClick={() => setExpend(false)}
+                      className="h-full p-1 bg-white rounded-full cursor-pointer hover:text-neutral-500 transition-all"
+                      onClick={() => {
+                        setExpend(false);
+                        setShowCode(false);
+                      }}
                     >
                       <XIcon />
                     </button>
@@ -88,6 +122,7 @@ const ShowQR = () => {
   );
 };
 
+// ICONS
 const QRIcon = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -134,6 +169,26 @@ const XIcon = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
     >
       <path d="m15 9-6 6" />
       <path d="m9 9 6 6" />
+    </svg>
+  );
+};
+
+const LinkIcon = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
     </svg>
   );
 };
