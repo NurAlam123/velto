@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const ShowQR = () => {
@@ -20,7 +21,7 @@ const ShowQR = () => {
 
     setTimeout(() => {
       setShowCode(true);
-    }, 200);
+    }, 300);
   }, [expend]);
 
   return (
@@ -46,8 +47,8 @@ const ShowQR = () => {
 
         @keyframes focus-in {
           0% {
-            scale: 110%;
-            filter: blur(4px);
+            scale: 120%;
+            filter: blur(2px);
           }
           100% {
             scale: 100%;
@@ -59,13 +60,13 @@ const ShowQR = () => {
         <div
           key={expend ? "expand" : "shrink"}
           className={clsx(
-            "shadow-sm",
-            expend ? "bg-gray-200" : "bg-neutral-200",
+            "shadow-sm rounded-full",
+            expend ? "bg-neutral-200" : "bg-neutral-200",
           )}
           style={{
             animation: !expend
-              ? "expend 0.3s forwards reverse ease-in-out"
-              : "expend 0.2s forwards normal ease-out",
+              ? "expend 0.3s forwards reverse var(--ease-wiggle)"
+              : "expend 0.3s forwards normal var(--ease-wiggle)",
           }}
         >
           {!expend ? (
@@ -79,41 +80,53 @@ const ShowQR = () => {
               </button>
             </div>
           ) : (
-            <div className="px-4 py-4 h-full">
-              {showCode && (
-                <div className="[animation:focus-in_0.2s_forwards_ease-in-out]">
-                  <div className="w-full h-56 border mb-1 rounded-2xl flex justify-center items-center">
-                    QR CODE
-                  </div>
-                  <div className="flex items-center justify-between gap-1">
-                    <button
-                      className="bg-white px-4 py-2 w-full rounded-full font-semibold flex items-center justify-center gap-1 ring-0 outline-none cursor-pointer overflow-hidden text-sm"
-                      onClick={copy}
-                    >
-                      <LinkIcon className="size-4" />
-                      {!copied ? (
-                        <span className="[animation:slideUp_0.3s]" key="copy">
-                          Copy Link
-                        </span>
-                      ) : (
-                        <span className="[animation:slideUp_0.3s]" key="copied">
-                          Copied Link
-                        </span>
-                      )}
-                    </button>
-
-                    <button
-                      className="h-full p-1 bg-white rounded-full cursor-pointer hover:text-neutral-500 transition-all"
-                      onClick={() => {
-                        setExpend(false);
-                        setShowCode(false);
-                      }}
-                    >
-                      <XIcon />
-                    </button>
-                  </div>
+            <div className="px-4 py-3 h-full relative">
+              <div
+                className={clsx(
+                  "inset-0 opacity-0",
+                  showCode &&
+                    "opacity-100 [animation:focus-in_0.2s_forwards_var(--ease-wiggle)_10ms] transition-all",
+                )}
+              >
+                <div className="w-full h-56 mb-1 rounded-2xl flex justify-center items-center overflow-hidden border border-neutral-300">
+                  <Image
+                    src="/qr-code.svg"
+                    alt="qr-code"
+                    width={1024}
+                    height={1024}
+                    draggable="false"
+                    className="select-none pointer-events-none h-full w-full object-cover"
+                  />
                 </div>
-              )}
+
+                <div className="flex items-center justify-between gap-1 mt-1.5">
+                  <button
+                    className="bg-white px-4 py-2 w-full rounded-full font-semibold flex items-center justify-center gap-1 ring-0 outline-none cursor-pointer overflow-hidden text-sm hover:text-neutral-600 border border-neutral-300"
+                    onClick={copy}
+                  >
+                    <LinkIcon className="size-4" />
+                    {!copied ? (
+                      <span className="[animation:slideUp_0.3s]" key="copy">
+                        Copy Link
+                      </span>
+                    ) : (
+                      <span className="[animation:slideUp_0.3s]" key="copied">
+                        Copied Link
+                      </span>
+                    )}
+                  </button>
+
+                  <button
+                    className="h-full p-1 bg-white rounded-full cursor-pointer hover:text-neutral-600 transition-all border border-neutral-300"
+                    onClick={() => {
+                      setExpend(false);
+                      setShowCode(false);
+                    }}
+                  >
+                    <XIcon />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
