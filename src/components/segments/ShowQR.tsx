@@ -35,7 +35,16 @@ const ShowQR = () => {
             filter: blur(0px);
           }
           5% {
+            filter: blur(2px);
+          }
+          10% {
             filter: blur(4px);
+          }
+          90% {
+            filter: blur(4px);
+          }
+          95% {
+            filter: blur(2px);
           }
           100% {
             width: 16rem;
