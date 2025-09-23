@@ -1,13 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const SetStatus = () => {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<StatusType | null>(null);
 
   const toggleOpen = () => setOpen(!open);
+
+  useEffect(() => {
+    if (selectedItem !== null) return;
+    setOpen(false);
+  }, [selectedItem]);
 
   return (
     <div className="relative">
