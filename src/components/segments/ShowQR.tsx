@@ -21,7 +21,7 @@ const ShowQR = () => {
 
     setTimeout(() => {
       setShowCode(true);
-    }, 300);
+    }, 150);
   }, [expend]);
 
   return (
@@ -35,16 +35,16 @@ const ShowQR = () => {
             filter: blur(0px);
           }
           5% {
-            filter: blur(2px);
+            filter: blur(0.5px);
           }
           10% {
-            filter: blur(4px);
+            filter: blur(2px);
           }
           90% {
-            filter: blur(4px);
+            filter: blur(2px);
           }
           95% {
-            filter: blur(2px);
+            filter: blur(0.5px);
           }
           100% {
             width: 16rem;
@@ -56,12 +56,14 @@ const ShowQR = () => {
 
         @keyframes focus-in {
           0% {
-            scale: 120%;
+            scale: 130%;
             filter: blur(2px);
+          }
+          80% {
+            filter: blur(0px);
           }
           100% {
             scale: 100%;
-            filter: blur(0px);
           }
         }
       `}</style>
@@ -92,9 +94,9 @@ const ShowQR = () => {
             <div className="px-4 py-3 h-full relative">
               <div
                 className={clsx(
-                  "inset-0 opacity-0",
+                  "opacity-0",
                   showCode &&
-                    "opacity-100 [animation:focus-in_0.2s_forwards_var(--ease-wiggle)_10ms] transition-all",
+                    "opacity-100 [animation:focus-in_0.3s_forwards_var(--ease-wiggle)] transition-all",
                 )}
               >
                 <div className="w-full h-56 mb-1 rounded-2xl flex justify-center items-center overflow-hidden border border-neutral-300">
