@@ -36,6 +36,7 @@ const STATUS_ICON: Array<ElementType> = [
 ];
 
 const EditBadge = () => {
+  const [clicked, setClicked] = useState(false);
   const [expend, setExpend] = useState<boolean>(false);
   const [statusTitle, setStatusTitle] = useState<string>("Completed");
   const [statusColorID, setStatusColorID] = useState<number>(3);
@@ -77,7 +78,10 @@ const EditBadge = () => {
         <div className="absolute -right-12">
           <button
             className="bg-neutral-200 rounded-full p-2 cursor-pointer hover:bg-neutral-300 transition-all active:scale-[95%] outline-none ring-0 shadow-xs"
-            onClick={() => setExpend(!expend)}
+            onClick={() => {
+              setClicked(true);
+              setExpend(!expend);
+            }}
           >
             <PencilIcon className="fill-black size-6" />
           </button>
@@ -87,28 +91,30 @@ const EditBadge = () => {
         <div
           key={expend ? "edit-badge-expand" : "edit-badge-shrink"}
           className={clsx(
-            "absolute bg-neutral-50/80 rounded-full p-6 opacity-100 min-w-36 border border-neutral-200 shadow-sm",
+            "absolute bg-neutral-50/80 rounded-full p-6 opacity-0 min-w-36 border border-neutral-200 shadow-sm",
             !expend && "pointer-events-none",
           )}
           style={
-            {
-              "--expend-opacity-start": "0%",
-              "--expend-opacity-5": "100%",
-              "--expend-radius-start": "calc(var(--spacing) * 8)",
-              "--expend-background-start": "#fafafa",
-              "--expend-width-start": "calc(var(--spacing) * 40)",
-              "--expend-height-start": "calc(var(--spacing) * 10)",
-              "--expend-width-end": "calc(var(--spacing) * 72)",
-              "--expend-height-end": "calc(var(--spacing) * 80)",
-              "--expend-background-end": "#fafafa",
-              "--expend-radius-end": "calc(var(--spacing) * 8)",
+            clicked
+              ? ({
+                  "--expend-opacity-start": "0%",
+                  "--expend-opacity-5": "100%",
+                  "--expend-radius-start": "calc(var(--spacing) * 8)",
+                  "--expend-background-start": "#fafafa",
+                  "--expend-width-start": "calc(var(--spacing) * 40)",
+                  "--expend-height-start": "calc(var(--spacing) * 10)",
+                  "--expend-width-end": "calc(var(--spacing) * 72)",
+                  "--expend-height-end": "calc(var(--spacing) * 80)",
+                  "--expend-background-end": "#fafafa",
+                  "--expend-radius-end": "calc(var(--spacing) * 8)",
 
-              animationName: "expend",
-              animationDuration: "300ms",
-              animationDirection: expend ? "normal" : "reverse",
-              animationFillMode: "forwards",
-              animationTimingFunction: "var(--ease-wiggle)",
-            } as React.CSSProperties
+                  animationName: "expend",
+                  animationDuration: "300ms",
+                  animationDirection: expend ? "normal" : "reverse",
+                  animationFillMode: "forwards",
+                  animationTimingFunction: "var(--ease-wiggle)",
+                } as React.CSSProperties)
+              : {}
           }
         >
           <div
@@ -174,8 +180,14 @@ EditBadge.EditBox = function EditBadgeEditBox({
   });
 
   const [title, setTitle] = useState<string>(statusTitle);
+  const [titleError, setTitleError] = useState<string>("");
 
   const update = () => {
+    if (title.trim() === "") {
+      setTitleError("Please enter a value");
+      return;
+    }
+    setTitleError("");
     setStatusTitle(title);
     setExpend(false);
   };
@@ -197,15 +209,25 @@ EditBadge.EditBox = function EditBadgeEditBox({
       </div>
 
       <div className="space-y-3">
-        <div>
+        <div className="relative">
+          <div className="absolute text-xs text-red-500 -top-5">
+            {titleError}
+          </div>
           <input
             placeholder="Badge title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            required
             onKeyDown={(e) => {
               if (e.key === "Enter") update();
             }}
-            className="px-3 py-2 rounded-xl font-semibold border border-neutral-300"
+            className={clsx(
+              "px-3 py-2 rounded-xl font-semibold border border-neutral-300",
+              titleError &&
+                "border-red-500 bg-red-500/5 ring-red-500 outline-red-500",
+            )}
           />
         </div>
         <div className="flex gap-1 relative">
