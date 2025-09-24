@@ -70,6 +70,7 @@ body {
     border-radius: var(--expend-radius-start);
     filter: blur(var(--expend-blur-start, 0px));
     opacity: var(--expend-opacity-start, 100%);
+    background-color: var(--expend-background-start, inherit);
   }
   5% {
     filter: blur(var(--expend-blur-5, 0.5px));
@@ -93,5 +94,6 @@ body {
     border-radius: var(--expend-radius-end);
     filter: blur(var(--expend-blur-end, 0px));
     opacity: var(--expend-opacity-end, 100%);
+    background-color: var(--expend-background-end, inherit);
   }
 }

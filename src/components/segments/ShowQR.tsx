@@ -43,10 +43,7 @@ const ShowQR = () => {
       <div className="relative w-fit h-fit">
         <div
           key={expend ? "expand" : "shrink"}
-          className={clsx(
-            "shadow-sm rounded-full",
-            expend ? "bg-neutral-200" : "bg-neutral-200",
-          )}
+          className={clsx("shadow-sm rounded-full !bg-neutral-200")}
           style={
             {
               "--expend-width-start": "12rem",
