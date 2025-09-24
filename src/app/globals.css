@@ -102,11 +102,14 @@ body {
   0% {
     scale: var(--focus-in-scale-start, 125%);
     filter: var(--focus-in-filter-start, unset);
+    opacity: var(--focus-in-opacity-start, 100%);
   }
   80% {
     filter: var(--focus-in-filter-80, unset);
+    opacity: var(--focus-in-opacity-80, unset);
   }
   100% {
     scale: var(--focus-in-scale-end, 100%);
+    opacity: var(--focus-in-opacity-end, 100%);
   }
 }
