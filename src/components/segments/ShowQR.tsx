@@ -27,33 +27,6 @@ const ShowQR = () => {
   return (
     <div>
       <style jsx>{`
-        @keyframes expend {
-          0% {
-            width: 12rem;
-            height: 3rem;
-            border-radius: 6rem;
-            filter: blur(0px);
-          }
-          5% {
-            filter: blur(0.5px);
-          }
-          10% {
-            filter: blur(2px);
-          }
-          90% {
-            filter: blur(2px);
-          }
-          95% {
-            filter: blur(0.5px);
-          }
-          100% {
-            width: 16rem;
-            height: 18rem;
-            border-radius: 2rem;
-            filter: blur(0px);
-          }
-        }
-
         @keyframes focus-in {
           0% {
             scale: 130%;
@@ -74,11 +47,20 @@ const ShowQR = () => {
             "shadow-sm rounded-full",
             expend ? "bg-neutral-200" : "bg-neutral-200",
           )}
-          style={{
-            animation: !expend
-              ? "expend 0.3s forwards reverse var(--ease-wiggle)"
-              : "expend 0.3s forwards normal var(--ease-wiggle)",
-          }}
+          style={
+            {
+              "--expend-width-start": "12rem",
+              "--expend-height-start": "3rem",
+              "--expend-radius-start": "6rem",
+              "--expend-width-end": "16rem",
+              "--expend-height-end": "18rem",
+              "--expend-radius-end": "2rem",
+
+              animation: !expend
+                ? "expend 0.3s forwards reverse var(--ease-wiggle)"
+                : "expend 0.3s forwards normal var(--ease-wiggle)",
+            } as React.CSSProperties
+          }
         >
           {!expend ? (
             <div className="flex items-center justify-center rounded-full w-full h-full">

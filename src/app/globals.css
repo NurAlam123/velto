@@ -61,3 +61,37 @@ body {
   color: var(--foreground);
   font-family: var(--font-montserrat), Helvetica, Arial, sans-serif;
 }
+
+/* Global animations */
+@keyframes expend {
+  0% {
+    width: var(--expend-width-start);
+    height: var(--expend-height-start);
+    border-radius: var(--expend-radius-start);
+    filter: blur(var(--expend-blur-start, 0px));
+    opacity: var(--expend-opacity-start, 100%);
+  }
+  5% {
+    filter: blur(var(--expend-blur-5, 0.5px));
+    opacity: var(--expend-opacity-5, 100%);
+  }
+  10% {
+    filter: blur(var(--expend-blur-10, 2px));
+    opacity: var(--expend-opacity-10, 100%);
+  }
+  90% {
+    filter: blur(var(--expend-blur-90, 2px));
+    opacity: var(--expend-opacity-90, 100%);
+  }
+  95% {
+    filter: blur(var(--expend-blur-95, 0.5px));
+    opacity: var(--expend-opacity-95, 100%);
+  }
+  100% {
+    width: var(--expend-width-end);
+    height: var(--expend-height-end);
+    border-radius: var(--expend-radius-end);
+    filter: blur(var(--expend-blur-end, 0px));
+    opacity: var(--expend-opacity-end, 100%);
+  }
+}
