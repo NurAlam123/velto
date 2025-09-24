@@ -97,3 +97,16 @@ body {
     background-color: var(--expend-background-end, inherit);
   }
 }
+
+@keyframes focus-in {
+  0% {
+    scale: var(--focus-in-scale-start, 125%);
+    filter: var(--focus-in-filter-start, unset);
+  }
+  80% {
+    filter: var(--focus-in-filter-80, unset);
+  }
+  100% {
+    scale: var(--focus-in-scale-end, 100%);
+  }
+}

@@ -26,20 +26,6 @@ const ShowQR = () => {
 
   return (
     <div>
-      <style jsx>{`
-        @keyframes focus-in {
-          0% {
-            scale: 130%;
-            filter: blur(2px);
-          }
-          80% {
-            filter: blur(0px);
-          }
-          100% {
-            scale: 100%;
-          }
-        }
-      `}</style>
       <div className="relative w-fit h-fit">
         <div
           key={expend ? "expand" : "shrink"}
@@ -77,6 +63,14 @@ const ShowQR = () => {
                   showCode &&
                     "opacity-100 [animation:focus-in_0.3s_forwards_var(--ease-wiggle)] transition-all",
                 )}
+                style={
+                  {
+                    "--focus-in-scale-start": "130%",
+                    "--focus-in-filter-start": "blur(2px)",
+                    "--focus-in-filter-80": "blur(0px)",
+                    "--focus-in-scale-end": "100%",
+                  } as React.CSSProperties
+                }
               >
                 <div className="w-full h-56 mb-1 rounded-2xl flex justify-center items-center overflow-hidden border border-neutral-300">
                   <Image
