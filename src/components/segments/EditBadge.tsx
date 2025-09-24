@@ -31,7 +31,7 @@ const EditBadge = () => {
         </div>
 
         <div
-          key={expend ? "expand" : "shrink"}
+          key={expend ? "edit-badge-expand" : "edit-badge-shrink"}
           className="absolute bg-neutral-200/80 rounded-full px-3 py-2 opacity-100 min-w-36"
           // className="absolute bg-neutral-300 rounded-md px-3 py-2 w-72 h-80"
           style={
@@ -54,7 +54,7 @@ const EditBadge = () => {
           }
         >
           <div
-            key={expend ? "inside-expend" : "inside-shrink"}
+            key={expend ? "edit-badge-focus-in" : "edit-badge-focus-out"}
             className={clsx(
               "flex justify-between items-center scale-0 opacity-0",
             )}
@@ -64,7 +64,7 @@ const EditBadge = () => {
                 "--focus-in-opacity-start": "0%",
 
                 animation: expend
-                  ? "focus-in 0.2s forwards 0.1s"
+                  ? "focus-in 0.2s forwards 75ms"
                   : "focus-in 0.2s forwards reverse",
               } as React.CSSProperties
             }
