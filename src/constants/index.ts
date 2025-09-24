@@ -1,5 +1,6 @@
 import BlurCarousel from "@/components/segments/BlurCarousel";
 import Countdown from "@/components/segments/countdown";
+import EditBadge from "@/components/segments/EditBadge";
 import GaborProject from "@/components/segments/GaborProject";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 import SetStatus from "@/components/segments/SetStatus";
@@ -16,6 +17,13 @@ export type InteractionsType = {
   component: React.ComponentType;
 };
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 9,
+    title: "Edit Badge",
+    badges: ["click", "hover"],
+    date: "Sep 24, 2025",
+    component: EditBadge,
+  },
   {
     id: 8,
     title: "Show QR",
