@@ -36,7 +36,7 @@ const STATUS_ICON: Array<ElementType> = [
 ];
 
 const EditBadge = () => {
-  const [clicked, setClicked] = useState(false);
+  const clicked = useRef<boolean>(false);
   const [expend, setExpend] = useState<boolean>(false);
   const [statusTitle, setStatusTitle] = useState<string>("Completed");
   const [statusColorID, setStatusColorID] = useState<number>(3);
@@ -79,7 +79,7 @@ const EditBadge = () => {
           <button
             className="bg-neutral-200 rounded-full p-2 cursor-pointer hover:bg-neutral-300 transition-all active:scale-[95%] outline-none ring-0 shadow-xs"
             onClick={() => {
-              setClicked(true);
+              clicked.current = true;
               setExpend(!expend);
             }}
           >
@@ -95,7 +95,7 @@ const EditBadge = () => {
             !expend && "pointer-events-none",
           )}
           style={
-            clicked
+            clicked.current
               ? ({
                   "--expend-opacity-start": "0%",
                   "--expend-opacity-5": "100%",

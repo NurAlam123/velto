@@ -2,10 +2,11 @@
 
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ShowQR = () => {
   const URL = "https://youtu.be/dQw4w9WgXcQ";
+  const clicked = useRef(false);
   const [expend, setExpend] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -31,25 +32,30 @@ const ShowQR = () => {
           key={expend ? "show-qr-expand" : "show-qr-shrink"}
           className={clsx("shadow-sm rounded-full !bg-neutral-200")}
           style={
-            {
-              "--expend-width-start": "12rem",
-              "--expend-height-start": "3rem",
-              "--expend-radius-start": "6rem",
-              "--expend-width-end": "16rem",
-              "--expend-height-end": "18rem",
-              "--expend-radius-end": "2rem",
+            clicked.current
+              ? ({
+                  "--expend-width-start": "12rem",
+                  "--expend-height-start": "3rem",
+                  "--expend-radius-start": "6rem",
+                  "--expend-width-end": "16rem",
+                  "--expend-height-end": "18rem",
+                  "--expend-radius-end": "2rem",
 
-              animation: !expend
-                ? "expend 0.3s forwards reverse var(--ease-wiggle)"
-                : "expend 0.3s forwards normal var(--ease-wiggle)",
-            } as React.CSSProperties
+                  animation: !expend
+                    ? "expend 0.3s forwards reverse var(--ease-wiggle)"
+                    : "expend 0.3s forwards normal var(--ease-wiggle)",
+                } as React.CSSProperties)
+              : {}
           }
         >
           {!expend ? (
             <div className="flex items-center justify-center rounded-full w-full h-full">
               <button
                 className="cursor-pointer px-4 py-2 flex gap-2 font-semibold justify-center items-center outline-none ring-0 w-full h-full"
-                onClick={() => setExpend(true)}
+                onClick={() => {
+                  clicked.current = true;
+                  setExpend(true);
+                }}
               >
                 <QRIcon className="size-6" />
                 <span>Show QR Code</span>
