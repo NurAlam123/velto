@@ -56,14 +56,14 @@ export const CheckedIcon = (props: React.SVGProps<SVGSVGElement>) => {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill="currentColor"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
-      <circle cx="12" cy="12" r="10" fill="currentColor" />
+      <circle cx="12" cy="12" r="10" fill="inherit" stroke="inherit" />
       <path d="m9 12 2 2 4-4" stroke="#ffffff" />
     </svg>
   );
