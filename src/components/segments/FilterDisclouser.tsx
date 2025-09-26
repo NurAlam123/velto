@@ -7,7 +7,7 @@ import {
   ScheduledIcon,
 } from "@/assets/icons";
 import clsx from "clsx";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 type OptionsType = {
   title: string;
@@ -19,6 +19,7 @@ interface FilterContextType {
   setExpend: React.Dispatch<React.SetStateAction<boolean>>;
   checked: number;
   setChecked: React.Dispatch<React.SetStateAction<number>>;
+  clicked: React.RefObject<boolean>;
 }
 
 const options: OptionsType[] = [
@@ -48,9 +49,12 @@ const FilterContext = React.createContext<FilterContextType | undefined>(
 const FilterDisclouser = () => {
   const [expend, setExpend] = useState<boolean>(false);
   const [checked, setChecked] = useState<number>(0);
+  const clicked = useRef<boolean>(false);
 
   return (
-    <FilterContext.Provider value={{ checked, setChecked, expend, setExpend }}>
+    <FilterContext.Provider
+      value={{ checked, setChecked, expend, setExpend, clicked }}
+    >
       <div className="flex items-center gap-2 relative justify-center">
         <FilterDisclouser.FilterButton />
         <FilterDisclouser.FilterIcon />
@@ -67,12 +71,15 @@ FilterDisclouser.FilterButton = function FilterDisclouserFilterButton() {
   if (!context)
     throw new Error("FilterButton must be used inside FilterDisclouser");
 
-  const { setExpend } = context;
+  const { setExpend, clicked } = context;
 
   return (
     <button
       className="bg-neutral-50 p-2 size-14 flex items-center justify-center rounded-full shadow-xs cursor-pointer active:scale-[98%] z-[1] border-2 border-neutral-200"
-      onClick={() => setExpend(true)}
+      onClick={() => {
+        setExpend(true);
+        clicked.current = true;
+      }}
     >
       <ListFilterIcon className="size-6" />
     </button>
@@ -102,7 +109,7 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
   if (!context)
     throw new Error("ExpendDiv must be used inside FilterDisclouser");
 
-  const { expend } = context;
+  const { expend, clicked } = context;
 
   return (
     <div
@@ -112,24 +119,26 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
         !expend && "pointer-events-none",
       )}
       style={
-        {
-          "--expend-opacity-start": "0%",
-          "--expend-opacity-5": "100%",
-          "--expend-radius-start": "calc(var(--spacing) * 8)",
-          "--expend-background-start": "#fafafa",
-          "--expend-width-start": "calc(var(--spacing) * 14)",
-          "--expend-height-start": "calc(var(--spacing) * 14)",
-          "--expend-width-end": "calc(var(--spacing) * 72)",
-          "--expend-height-end": "calc(var(--spacing) * 80)",
-          "--expend-background-end": "#fafafa",
-          "--expend-radius-end": "calc(var(--spacing) * 8)",
+        clicked.current
+          ? ({
+              "--expend-opacity-start": "0%",
+              "--expend-opacity-5": "100%",
+              "--expend-radius-start": "calc(var(--spacing) * 8)",
+              "--expend-background-start": "#fafafa",
+              "--expend-width-start": "calc(var(--spacing) * 14)",
+              "--expend-height-start": "calc(var(--spacing) * 14)",
+              "--expend-width-end": "calc(var(--spacing) * 72)",
+              "--expend-height-end": "calc(var(--spacing) * 80)",
+              "--expend-background-end": "#fafafa",
+              "--expend-radius-end": "calc(var(--spacing) * 8)",
 
-          animationName: "expend",
-          animationDuration: "300ms",
-          animationDirection: expend ? "normal" : "reverse",
-          animationFillMode: "forwards",
-          animationTimingFunction: "var(--ease-wiggle)",
-        } as React.CSSProperties
+              animationName: "expend",
+              animationDuration: "300ms",
+              animationDirection: expend ? "normal" : "reverse",
+              animationFillMode: "forwards",
+              animationTimingFunction: "var(--ease-wiggle)",
+            } as React.CSSProperties)
+          : {}
       }
     >
       <div>
@@ -160,30 +169,32 @@ FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
   if (!context)
     throw new Error("RadioButton must be used inside FilterDisclouser");
 
-  const { expend, setExpend, checked, setChecked } = context;
+  const { expend, clicked, setExpend, checked, setChecked } = context;
 
   return (
     <div
       className="flex items-center justify-between py-2 opacity-0 select-none"
-      {...props}
       role="presentation"
       onClick={() => {
         setChecked(index);
         setExpend(false);
       }}
       style={
-        {
-          "--slide-up-transform-start": "translateY(16px) scale(0.95)",
-          "--slide-up-transform-end": "translateY(0px) scale(1)",
+        clicked.current
+          ? ({
+              "--slide-up-transform-start": "translateY(16px) scale(0.95)",
+              "--slide-up-transform-end": "translateY(0px) scale(1)",
 
-          animationName: "slide-up",
-          animationDirection: expend ? "normal" : "reverse",
-          animationDuration: "150ms",
-          animationFillMode: "forwards",
-          animationDelay: expend ? `${index * 150}ms` : "0s",
-          animationTimingFunction: "ease-in-out",
-        } as React.CSSProperties
+              animationName: "slide-up",
+              animationDirection: expend ? "normal" : "reverse",
+              animationDuration: "150ms",
+              animationFillMode: "forwards",
+              animationDelay: expend ? `${index * 150}ms` : "0ms",
+              animationTimingFunction: "ease-in-out",
+            } as React.CSSProperties)
+          : {}
       }
+      {...props}
     >
       <div className="flex gap-2">
         <Icon className="size-6" />
