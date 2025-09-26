@@ -113,3 +113,16 @@ body {
     opacity: var(--focus-in-opacity-end, 100%);
   }
 }
+
+@keyframes slide-up {
+  0% {
+    transform: var(--slide-up-transform-start, unset);
+    filter: var(--slide-up-filter-start, unset);
+    opacity: var(--slide-up-opacity-start, 0);
+  }
+  100% {
+    transform: var(--slide-up-transform-end, unset);
+    filter: var(--slide-up-filter-end, unset);
+    opacity: var(--slide-up-opacity-end, 1);
+  }
+}
