@@ -1,6 +1,7 @@
 import BlurCarousel from "@/components/segments/BlurCarousel";
 import Countdown from "@/components/segments/countdown";
 import EditBadge from "@/components/segments/EditBadge";
+import FilterDisclouser from "@/components/segments/FilterDisclouser";
 import GaborProject from "@/components/segments/GaborProject";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 import SetStatus from "@/components/segments/SetStatus";
@@ -16,11 +17,19 @@ export type InteractionsType = {
   versions?: number;
   component: React.ComponentType;
 };
+
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 10,
+    title: "Filter Disclouser",
+    badges: ["click"],
+    date: "Sep 26, 2025",
+    component: FilterDisclouser,
+  },
   {
     id: 9,
     title: "Edit Badge",
-    badges: ["click", "hover"],
+    badges: ["click"],
     date: "Sep 24, 2025",
     component: EditBadge,
   },
