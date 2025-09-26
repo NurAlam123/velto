@@ -1,13 +1,17 @@
 "use client";
 
 import {
-  BlockedIcon,
+  BellDotIcon,
+  CalenderDaysIcon,
   CheckedIcon,
+  ListChecksIcon,
   ListFilterIcon,
-  ScheduledIcon,
+  PartyPopperIcon,
+  PinIcon,
+  UsersIcon,
 } from "@/assets/icons";
 import clsx from "clsx";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 type OptionsType = {
   title: string;
@@ -20,24 +24,34 @@ interface FilterContextType {
   checked: number;
   setChecked: React.Dispatch<React.SetStateAction<number>>;
   clicked: React.RefObject<boolean>;
+  showList: boolean;
+  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const options: OptionsType[] = [
   {
     title: "Tasks",
-    icon: BlockedIcon,
+    icon: ListChecksIcon,
   },
   {
-    title: "Creation",
-    icon: ScheduledIcon,
+    title: "Events",
+    icon: CalenderDaysIcon,
   },
   {
-    title: "Creation",
-    icon: ScheduledIcon,
+    title: "Reminders",
+    icon: BellDotIcon,
   },
   {
-    title: "Creation",
-    icon: ScheduledIcon,
+    title: "Appointments",
+    icon: PinIcon,
+  },
+  {
+    title: "Mettings",
+    icon: UsersIcon,
+  },
+  {
+    title: "Celebrations",
+    icon: PartyPopperIcon,
   },
 ];
 
@@ -51,9 +65,30 @@ const FilterDisclouser = () => {
   const [checked, setChecked] = useState<number>(0);
   const clicked = useRef<boolean>(false);
 
+  const [showList, setShowList] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!expend && showList) {
+      setTimeout(() => setShowList(false), 200);
+      return;
+    }
+
+    setTimeout(() => {
+      setShowList(true);
+    }, 150);
+  }, [expend]);
+
   return (
     <FilterContext.Provider
-      value={{ checked, setChecked, expend, setExpend, clicked }}
+      value={{
+        checked,
+        setChecked,
+        expend,
+        setExpend,
+        clicked,
+        showList,
+        setShowList,
+      }}
     >
       <div className="flex items-center gap-2 relative justify-center">
         <FilterDisclouser.FilterButton />
@@ -109,13 +144,13 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
   if (!context)
     throw new Error("ExpendDiv must be used inside FilterDisclouser");
 
-  const { expend, clicked } = context;
+  const { expend, clicked, showList } = context;
 
   return (
     <div
       key={expend ? "filter-disclouser-expand" : "filter-disclouser-shrink"}
       className={clsx(
-        "absolute bg-neutral-50 rounded-full p-6 opacity-0 min-w-14 min-h-14 border border-neutral-200 shadow-sm z-[2] overflow-hidden",
+        "absolute bg-neutral-50 rounded-full p-6 opacity-0 min-w-12 min-h-12 border border-neutral-200 shadow-sm z-[2] overflow-hidden",
         !expend && "pointer-events-none",
       )}
       style={
@@ -125,15 +160,15 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
               "--expend-opacity-5": "100%",
               "--expend-radius-start": "calc(var(--spacing) * 8)",
               "--expend-background-start": "#fafafa",
-              "--expend-width-start": "calc(var(--spacing) * 14)",
-              "--expend-height-start": "calc(var(--spacing) * 14)",
+              "--expend-width-start": "calc(var(--spacing) * 12)",
+              "--expend-height-start": "calc(var(--spacing) * 12)",
               "--expend-width-end": "calc(var(--spacing) * 72)",
               "--expend-height-end": "calc(var(--spacing) * 80)",
               "--expend-background-end": "#fafafa",
               "--expend-radius-end": "calc(var(--spacing) * 8)",
 
               animationName: "expend",
-              animationDuration: "300ms",
+              animationDuration: expend ? "300ms" : "250ms",
               animationDirection: expend ? "normal" : "reverse",
               animationFillMode: "forwards",
               animationTimingFunction: "var(--ease-wiggle)",
@@ -141,16 +176,18 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
           : {}
       }
     >
-      <div>
-        {options.map((option, i) => (
-          <FilterDisclouser.RadioButton
-            key={`filter-disclouser-option-x-${i}`}
-            index={i}
-            title={option.title}
-            icon={option.icon}
-          />
-        ))}
-      </div>
+      {showList && (
+        <>
+          {options.map((option, i) => (
+            <FilterDisclouser.RadioButton
+              key={`filter-disclouser-option-x-${i}`}
+              index={i}
+              title={option.title}
+              icon={option.icon}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };
@@ -189,7 +226,7 @@ FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
               animationDirection: expend ? "normal" : "reverse",
               animationDuration: "150ms",
               animationFillMode: "forwards",
-              animationDelay: expend ? `${index * 150}ms` : "0ms",
+              animationDelay: expend ? `${index * 75}ms` : "0ms",
               animationTimingFunction: "ease-in-out",
             } as React.CSSProperties)
           : {}
@@ -197,7 +234,7 @@ FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
       {...props}
     >
       <div className="flex gap-2">
-        <Icon className="size-6" />
+        <Icon className="size-6 opacity-60" />
         <p className="font-semibold">{title}</p>
       </div>
       <div>
@@ -215,6 +252,7 @@ FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
           name="filter-disclouser-option"
           value={title}
           checked={checked === index}
+          readOnly
         />
       </div>
     </div>
