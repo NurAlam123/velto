@@ -18,7 +18,7 @@ type OptionsType = {
   icon: React.ElementType;
 };
 
-interface FilterContextType {
+interface FilterDisclosureContextType {
   expend: boolean;
   setExpend: React.Dispatch<React.SetStateAction<boolean>>;
   checked: number;
@@ -56,11 +56,11 @@ const options: OptionsType[] = [
 ];
 
 // Context & Provider
-const FilterContext = React.createContext<FilterContextType | undefined>(
-  undefined,
-);
+const FilterDisclosureContext = React.createContext<
+  FilterDisclosureContextType | undefined
+>(undefined);
 
-const FilterDisclouser = () => {
+const FilterDisclosure = () => {
   const [expend, setExpend] = useState<boolean>(false);
   const [checked, setChecked] = useState<number>(0);
   const clicked = useRef<boolean>(false);
@@ -79,7 +79,7 @@ const FilterDisclouser = () => {
   }, [expend]);
 
   return (
-    <FilterContext.Provider
+    <FilterDisclosureContext.Provider
       value={{
         checked,
         setChecked,
@@ -91,18 +91,18 @@ const FilterDisclouser = () => {
       }}
     >
       <div className="flex items-center gap-2 relative justify-center">
-        <FilterDisclouser.FilterButton />
-        <FilterDisclouser.FilterIcon />
+        <FilterDisclosure.FilterButton />
+        <FilterDisclosure.FilterIcon />
 
         {/* Expended Div */}
-        <FilterDisclouser.ExpendDiv />
+        <FilterDisclosure.ExpendDiv />
       </div>
-    </FilterContext.Provider>
+    </FilterDisclosureContext.Provider>
   );
 };
 
-FilterDisclouser.FilterButton = function FilterDisclouserFilterButton() {
-  const context = useContext(FilterContext);
+FilterDisclosure.FilterButton = function FilterDisclouserFilterButton() {
+  const context = useContext(FilterDisclosureContext);
   if (!context)
     throw new Error("FilterButton must be used inside FilterDisclouser");
 
@@ -124,8 +124,8 @@ FilterDisclouser.FilterButton = function FilterDisclouserFilterButton() {
   );
 };
 
-FilterDisclouser.FilterIcon = function FilterDisclouserFilterIcon() {
-  const context = useContext(FilterContext);
+FilterDisclosure.FilterIcon = function FilterDisclouserFilterIcon() {
+  const context = useContext(FilterDisclosureContext);
   if (!context)
     throw new Error("FilterIcon must be used inside FilterDisclouser");
 
@@ -147,8 +147,8 @@ FilterDisclouser.FilterIcon = function FilterDisclouserFilterIcon() {
   );
 };
 
-FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
-  const context = useContext(FilterContext);
+FilterDisclosure.ExpendDiv = function FilterDisclouserExpendDiv() {
+  const context = useContext(FilterDisclosureContext);
   if (!context)
     throw new Error("ExpendDiv must be used inside FilterDisclouser");
 
@@ -188,7 +188,7 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
       {showList && (
         <>
           {options.map((option, i) => (
-            <FilterDisclouser.RadioButton
+            <FilterDisclosure.RadioButton
               key={`filter-disclouser-option-x-${i}`}
               index={i}
               title={option.title}
@@ -201,7 +201,7 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
   );
 };
 
-FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
+FilterDisclosure.RadioButton = function FilterDisclouserRadioButton({
   title,
   icon: Icon,
   index,
@@ -211,7 +211,7 @@ FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
   icon: React.ElementType;
   index: number;
 } & React.HTMLAttributes<HTMLDivElement>) {
-  const context = useContext(FilterContext);
+  const context = useContext(FilterDisclosureContext);
   if (!context)
     throw new Error("RadioButton must be used inside FilterDisclouser");
 
@@ -268,4 +268,4 @@ FilterDisclouser.RadioButton = function FilterDisclouserRadioButton({
   );
 };
 
-export default FilterDisclouser;
+export default FilterDisclosure;

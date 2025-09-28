@@ -1,7 +1,7 @@
 import BlurCarousel from "@/components/segments/BlurCarousel";
 import Countdown from "@/components/segments/countdown";
 import EditBadge from "@/components/segments/EditBadge";
-import FilterDisclouser from "@/components/segments/FilterDisclouser";
+import FilterDisclosure from "@/components/segments/FilterDisclosure";
 import GaborProject from "@/components/segments/GaborProject";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 import SetStatus from "@/components/segments/SetStatus";
@@ -21,10 +21,10 @@ export type InteractionsType = {
 export const interactions: Array<InteractionsType> = [
   {
     id: 10,
-    title: "Filter Disclouser",
+    title: "Filter Disclosure",
     badges: ["click"],
     date: "Sep 26, 2025",
-    component: FilterDisclouser,
+    component: FilterDisclosure,
   },
   {
     id: 9,
