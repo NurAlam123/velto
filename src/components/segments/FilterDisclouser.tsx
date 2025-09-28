@@ -69,7 +69,7 @@ const FilterDisclouser = () => {
 
   useEffect(() => {
     if (!expend && showList) {
-      setTimeout(() => setShowList(false), 200);
+      setTimeout(() => setShowList(false), 250);
       return;
     }
 
@@ -106,11 +106,14 @@ FilterDisclouser.FilterButton = function FilterDisclouserFilterButton() {
   if (!context)
     throw new Error("FilterButton must be used inside FilterDisclouser");
 
-  const { setExpend, clicked } = context;
+  const { setExpend, clicked, expend } = context;
 
   return (
     <button
-      className="bg-neutral-50 p-2 size-14 flex items-center justify-center rounded-full shadow-xs cursor-pointer active:scale-[98%] z-[1] border-2 border-neutral-200"
+      className={clsx(
+        "bg-neutral-50 p-2 size-14 flex items-center justify-center rounded-full shadow-xs cursor-pointer active:scale-[98%] z-[1] border-2 border-neutral-200 transition-all origin-center scale-100 ease-in-out",
+        expend && "!scale-95",
+      )}
       onClick={() => {
         setExpend(true);
         clicked.current = true;
@@ -126,10 +129,15 @@ FilterDisclouser.FilterIcon = function FilterDisclouserFilterIcon() {
   if (!context)
     throw new Error("FilterIcon must be used inside FilterDisclouser");
 
-  const { checked } = context;
+  const { checked, expend } = context;
 
   return (
-    <div className="bg-neutral-50 border-2 border-neutral-200 size-14 rounded-full flex items-center justify-center z-0 absolute top-0 left-full inset-0 -translate-x-4">
+    <div
+      className={clsx(
+        "bg-neutral-50 border-2 border-neutral-200 size-14 rounded-full flex items-center justify-center z-0 absolute top-0 left-full inset-0 -translate-x-4 transition-all ease-in-out",
+        expend && "-translate-x-5",
+      )}
+    >
       <div className="opacity-60">
         {React.createElement(options[checked].icon, {
           className: "size-6",
@@ -169,6 +177,7 @@ FilterDisclouser.ExpendDiv = function FilterDisclouserExpendDiv() {
 
               animationName: "expend",
               animationDuration: expend ? "300ms" : "250ms",
+              animationDelay: !expend ? "" : "75ms",
               animationDirection: expend ? "normal" : "reverse",
               animationFillMode: "forwards",
               animationTimingFunction: "var(--ease-wiggle)",
