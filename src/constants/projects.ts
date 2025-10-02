@@ -26,7 +26,7 @@ export const projects: ProjectsType[] = [
     image:
       "https://github.com/NurAlam123/carecore/raw/main/public/carecore.png",
     title: "CareCore",
-    live: "https://carecore.netlify.app",
+    live: "https://carecore-mocha.vercel.app/",
     github: "https://github.com/NurAlam123/carecore/",
   },
 ];
