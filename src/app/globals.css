@@ -62,6 +62,11 @@ body {
   font-family: var(--font-montserrat), Helvetica, Arial, sans-serif;
 }
 
+::selection {
+  background-color: oklch(88.2% 0.059 254.128);
+  color: oklch(42.4% 0.199 265.638);
+}
+
 /* Global animations */
 @keyframes expend {
   0% {

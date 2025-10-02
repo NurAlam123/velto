@@ -29,11 +29,19 @@ export default function Home() {
           <a
             href="https://github.com/nuralam123"
             target="_blank"
-            className="inline-block relative group"
+            className="inline-block relative group focus:outline-none"
           >
-            <strong>Nur Alam.</strong>
+            <strong className="group-focus:outline-2 group-focus:outline-blue-500 group-focus:rounded-sm">
+              Nur Alam.
+            </strong>
             <span className="w-12 h-12 inline-block overflow-hidden object-cover rounded-md shadow-sm absolute top-1/2 left-1/2 translate-x-2 -translate-y-16 opacity-0 scale-110 blur-xs group-hover:scale-100 group-hover:opacity-100 group-hover:rotate-6 group-hover:blur-none transition-all ease-in-out duration-200">
-              <Image src="/me.webp" width={64} height={64} alt="me" />
+              <Image
+                src="/me.webp"
+                width={64}
+                height={64}
+                alt="me"
+                draggable="false"
+              />
             </span>
             <RightArrow className="absolute top-1/2 right-0 size-6 -translate-y-1/2 -translate-x-4 opacity-0 blur-sm group-hover:translate-x-8 group-hover:opacity-100 scale-80 group-hover:scale-100 group-hover:blur-none transition-all ease-in-out duration-200" />
           </a>
