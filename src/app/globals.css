@@ -54,6 +54,10 @@
   --foreground: #171717;
 
   scroll-behavior: smooth;
+
+  /* Style scroll bar */
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
 }
 
 body {
@@ -62,7 +66,13 @@ body {
   font-family: var(--font-montserrat), Helvetica, Arial, sans-serif;
 }
 
+/* Style seletion highlight */
 ::selection {
+  background-color: oklch(88.2% 0.059 254.128);
+  color: oklch(42.4% 0.199 265.638);
+}
+
+::-moz-selection {
   background-color: oklch(88.2% 0.059 254.128);
   color: oklch(42.4% 0.199 265.638);
 }
