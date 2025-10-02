@@ -6,8 +6,8 @@ import { projects } from "@/constants/projects";
 
 export default function Home() {
   return (
-    <div className="h-screen mt-8 md:mt-32 ">
-      <div className="w-full border-y py-2 my-8 border-dashed border-neutral-300">
+    <div className="h-screen mt-0 md:mt-32 ">
+      <div className="w-full border-y py-2 mb-8 md:my-8 border-dashed border-neutral-300">
         <div className="max-w-md mx-auto flex justify-between items-center px-4 z-[999] bg-white">
           <h1 className="text-2xl md:text-4xl font-bold">Velto</h1>
           <div>
@@ -87,7 +87,7 @@ export default function Home() {
               </div>
 
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center group-hover:transition-opacity duration-75 ease-in-out">
-                <p className="text-white font-bold mb-4 text-2xl">
+                <p className="text-white font-bold mb-2 md:mb-4 text-lg md:text-2xl">
                   {project.title}
                 </p>
 
@@ -105,7 +105,7 @@ export default function Home() {
                       alt="github"
                       width={24}
                       height={24}
-                      className="size-7 invert"
+                      className="size-6 md:size-7 invert"
                     />
                   </a>
                   <a
@@ -121,7 +121,7 @@ export default function Home() {
                       alt="link"
                       width={24}
                       height={24}
-                      className="size-7 invert"
+                      className="size-6 md:size-7 invert"
                     />
                   </a>
                 </div>
