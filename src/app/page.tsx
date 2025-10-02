@@ -2,6 +2,7 @@ import Box from "@/components/ui/box";
 import { interactions } from "@/constants";
 import Image from "next/image";
 import { RightArrow } from "@/assets/icons";
+import { projects } from "@/constants/projects";
 
 export default function Home() {
   return (
@@ -58,24 +59,101 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="w-full border-y py-4 border-dashed border-neutral-300">
-        <div className="max-w-md mx-auto px-4 uppercase text-xs md:text-sm font-bold text-neutral-600/80">
-          INTERACTIONS
+      <div>
+        <div
+          id="projects"
+          className="w-full border-y py-4 border-dashed border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50 mb-4"
+        >
+          <div className="max-w-md mx-auto px-4 uppercase text-xs md:text-sm font-bold text-neutral-600/80 select-none">
+            Projects
+          </div>
+        </div>
+
+        <div className="px-2 max-w-md mx-auto flex justify-center items-center flex-col gap-2">
+          {projects.map((project) => (
+            <div
+              key={`project-${project.id}`}
+              className="relative w-full h-full aspect-video min-w-32 min-h-32 border border-neutral-300 rounded-xl overflow-hidden shadow-sm group hover:cursor-pointer"
+            >
+              <div className="w-full h-full">
+                <Image
+                  src={project.image}
+                  alt={`Project-${project.id}`}
+                  width={1024}
+                  height={1024}
+                  className="object-cover w-full h-full select-none pointer-events-none"
+                  draggable="false"
+                />
+              </div>
+
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center group-hover:transition-opacity duration-75 ease-in-out">
+                <p className="text-white font-bold mb-4 text-2xl">
+                  {project.title}
+                </p>
+
+                <div className="flex gap-2 items-center">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    className="hover:scale-95"
+                  >
+                    <span className="sr-only">
+                      github link of {project.title}
+                    </span>
+                    <Image
+                      src="/logo/github.svg"
+                      alt="github"
+                      width={24}
+                      height={24}
+                      className="size-7 invert"
+                    />
+                  </a>
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    className="hover:scale-95"
+                  >
+                    <span className="sr-only">
+                      live link of {project.title}
+                    </span>
+                    <Image
+                      src="/icons/link.svg"
+                      alt="link"
+                      width={24}
+                      height={24}
+                      className="size-7 invert"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="px-2 max-w-md mx-auto flex justify-center items-center flex-col gap-8 pt-4 md:pt-8 md:gap-16 pb-8 md:pb-32">
-        {interactions.map((interaction) => (
-          <Box
-            key={interaction.id}
-            title={interaction.title}
-            badges={interaction.badges}
-            date={interaction.date}
-            {...(interaction.versions && { versions: interaction.versions })}
-          >
-            <interaction.component />
-          </Box>
-        ))}
+      <div className="mt-6">
+        <div
+          id="interactions"
+          className="w-full border-y py-4 border-dashed border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50"
+        >
+          <div className="max-w-md mx-auto px-4 uppercase text-xs md:text-sm font-bold text-neutral-600/80 select-none">
+            INTERACTIONS
+          </div>
+        </div>
+
+        <div className="px-2 max-w-md mx-auto flex justify-center items-center flex-col gap-8 pt-4 md:pt-8 md:gap-16 pb-8 md:pb-32">
+          {interactions.map((interaction) => (
+            <Box
+              key={interaction.id}
+              title={interaction.title}
+              badges={interaction.badges}
+              date={interaction.date}
+              {...(interaction.versions && { versions: interaction.versions })}
+            >
+              <interaction.component />
+            </Box>
+          ))}
+        </div>
       </div>
     </div>
   );
