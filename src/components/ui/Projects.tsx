@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDownIcon } from "@/assets/icons";
+import { ChevronDownIcon, RightArrow } from "@/assets/icons";
 import { projects } from "@/constants/projects";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -34,60 +34,25 @@ const Projects = () => {
         )}
       >
         {projects.map((project) => (
-          <div
+          <a
             key={`project-${project.id}`}
-            className="relative w-full h-full aspect-video min-w-32 min-h-32 border border-neutral-300 rounded-xl overflow-hidden shadow-sm group hover:cursor-pointer"
+            className="w-full bg-neutral-50 flex items-center justify-between gap-6 py-4 px-4 rounded-2xl shadow-xs hover:bg-neutral-100 group cursor-default border-neutral-100 border"
+            href={project.live}
+            target="_blank"
           >
-            <div className="w-full h-full">
-              <Image
-                src={project.image}
-                alt={`Project-${project.id}`}
-                width={1024}
-                height={1024}
-                className="object-cover w-full h-full select-none pointer-events-none"
-                draggable="false"
-              />
-            </div>
-
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center group-hover:transition-opacity duration-75 ease-in-out">
-              <p className="text-white font-bold mb-2 md:mb-4 text-lg md:text-2xl">
-                {project.title}
-              </p>
-
-              <div className="flex gap-2 items-center">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  className="hover:scale-95"
-                >
-                  <span className="sr-only">
-                    github link of {project.title}
-                  </span>
-                  <Image
-                    src="/logo/github.svg"
-                    alt="github"
-                    width={24}
-                    height={24}
-                    className="size-6 md:size-7 invert"
-                  />
-                </a>
-                <a
-                  href={project.live}
-                  target="_blank"
-                  className="hover:scale-95"
-                >
-                  <span className="sr-only">live link of {project.title}</span>
-                  <Image
-                    src="/icons/link.svg"
-                    alt="link"
-                    width={24}
-                    height={24}
-                    className="size-6 md:size-7 invert"
-                  />
-                </a>
+            <div className="flex items-center gap-4">
+              <project.logo className="size-8 md:size-12" />
+              <div>
+                <p className="text-lg md:text-xl font-medium">
+                  {project.title}
+                </p>
+                <p className="text-xs md:text-sm">{project.description}</p>
               </div>
             </div>
-          </div>
+            <div>
+              <RightArrow className="group-hover:-rotate-45 stroke-neutral-400 group-hover:stroke-neutral-600" />
+            </div>
+          </a>
         ))}
       </div>
     </div>
