@@ -1,13 +1,14 @@
 "use client";
 
 import { UnlinkIcon } from "@/assets/icons";
+import { cn } from "@/lib/utils";
 import { useCallback, useRef, useState } from "react";
 
 const HoldToDisconnect = () => {
   const [show, setShow] = useState(false);
   const isHolding = useRef<boolean>(false);
 
-  const holdDurationInSec = 3;
+  const holdDurationInSec = 2;
   const perimeter = 240; // perimeter = 2 * (width + height)
   const startTime = useRef<number | null>(null);
   const requestRef = useRef<number>(null);
@@ -17,15 +18,16 @@ const HoldToDisconnect = () => {
     if (rectRef.current)
       rectRef.current.style.setProperty("--progress", `${perimeter}`);
 
-    setShow(true);
     isHolding.current = true;
     startTime.current = null;
+    setShow(true);
     requestRef.current = requestAnimationFrame(animate);
   };
 
   const handleMouseLeave = () => {
-    setShow(false);
     isHolding.current = false;
+    setShow(false);
+
     if (requestRef.current) {
       cancelAnimationFrame(requestRef.current);
     }
@@ -38,6 +40,7 @@ const HoldToDisconnect = () => {
 
       const elapsed = timestamp - startTime.current;
       const percent = Math.min(elapsed / (holdDurationInSec * 1000), 1);
+
       rectRef.current.style.setProperty(
         "--progress",
         `${perimeter * (1 - percent)}`,
@@ -46,6 +49,9 @@ const HoldToDisconnect = () => {
       if (isHolding.current && percent < 1) {
         requestAnimationFrame(animate);
       }
+
+      // do something on complete
+      if (percent >= 1) console.log("Completed");
     },
     [isHolding.current, rectRef.current],
   );
@@ -53,11 +59,20 @@ const HoldToDisconnect = () => {
   return (
     <div className="relative">
       <button
-        className="rounded-2xl p-4 bg-neutral-200 shadow-xs w-14 h-14 hover:scale-[98%] z-[2] relative outline-none"
-        onMouseEnter={handleMouseEnter}
+        className={cn(
+          "rounded-2xl p-4 bg-neutral-200 shadow-xs w-14 h-14 z-[2] relative outline-none transition-all duration-75 ease-in-out",
+          isHolding.current && "scale-[0.95] bg-red-200",
+        )}
+        onMouseDown={handleMouseEnter}
+        onMouseUp={handleMouseLeave}
         onMouseLeave={handleMouseLeave}
       >
-        <UnlinkIcon className="size-6 stroke-2" />
+        <UnlinkIcon
+          className={cn(
+            "size-6 stroke-2",
+            isHolding.current && "stroke-red-500",
+          )}
+        />
       </button>
 
       <div
@@ -75,7 +90,7 @@ const HoldToDisconnect = () => {
               rx="18"
               ry="18"
               strokeWidth="2"
-              className="stroke-red-100"
+              className="stroke-red-200"
             />
             <rect
               style={{
@@ -91,7 +106,7 @@ const HoldToDisconnect = () => {
               ry="18"
               strokeWidth="2"
               className="stroke-red-500"
-              strokeDasharray="240"
+              strokeDasharray={perimeter}
             />
           </svg>
         )}
