@@ -7,15 +7,17 @@ import { useCallback, useRef, useState } from "react";
 const HoldToDisconnect = () => {
   const [showStroke, setShowStroke] = useState(false);
   const [showShadow, setShowShadow] = useState(false);
-  const isHolding = useRef<boolean>(false);
+  const [progress, setProgress] = useState(0);
 
   const holdDuration = 750;
+  const releaseDuration = 325;
+
   const perimeter = 240; // perimeter = 2 * (width + height)
+
+  const isHolding = useRef<boolean>(false);
   const startTime = useRef<number | null>(null);
   const requestRef = useRef<number>(null);
   const rectRef = useRef<HTMLDivElement | null>(null);
-
-  const [progress, setProgress] = useState(0);
 
   const handleMouseDown = () => {
     if (requestRef.current) cancelAnimationFrame(requestRef.current);
@@ -45,7 +47,9 @@ const HoldToDisconnect = () => {
       if (!startTime.current) startTime.current = timestamp;
 
       const elapsed = timestamp - startTime.current;
-      const delta = elapsed / holdDuration;
+      const delta = isHolding.current
+        ? elapsed / holdDuration
+        : elapsed / releaseDuration;
       const newProgress = isHolding.current
         ? Math.min(progress + delta, 1)
         : Math.max(progress - delta, 0);
