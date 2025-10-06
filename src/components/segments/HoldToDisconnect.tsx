@@ -1,18 +1,54 @@
 "use client";
 
 import { UnlinkIcon } from "@/assets/icons";
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const HoldToDisconnect = () => {
-  const [hover, setHover] = useState(false);
+  const [show, setShow] = useState(false);
+  const isHolding = useRef<boolean>(false);
+
+  const holdDurationInSec = 3;
+  const perimeter = 240; // perimeter = 2 * (width + height)
+  const startTime = useRef<number | null>(null);
+  const requestRef = useRef<number>(null);
+  const rectRef = useRef<HTMLDivElement | null>(null);
 
   const handleMouseEnter = () => {
-    setHover(true);
+    if (rectRef.current)
+      rectRef.current.style.setProperty("--progress", `${perimeter}`);
+
+    setShow(true);
+    isHolding.current = true;
+    startTime.current = null;
+    requestRef.current = requestAnimationFrame(animate);
   };
 
   const handleMouseLeave = () => {
-    setHover(false);
+    setShow(false);
+    isHolding.current = false;
+    if (requestRef.current) {
+      cancelAnimationFrame(requestRef.current);
+    }
   };
+
+  const animate = useCallback(
+    (timestamp: number) => {
+      if (!rectRef.current) return;
+      if (!startTime.current) startTime.current = timestamp;
+
+      const elapsed = timestamp - startTime.current;
+      const percent = Math.min(elapsed / (holdDurationInSec * 1000), 1);
+      rectRef.current.style.setProperty(
+        "--progress",
+        `${perimeter * (1 - percent)}`,
+      );
+
+      if (isHolding.current && percent < 1) {
+        requestAnimationFrame(animate);
+      }
+    },
+    [isHolding.current, rectRef.current],
+  );
 
   return (
     <div className="relative">
@@ -24,8 +60,11 @@ const HoldToDisconnect = () => {
         <UnlinkIcon className="size-6 stroke-2" />
       </button>
 
-      {hover && (
-        <div className="absolute top-1/2 left-1/2 -translate-1/2 w-16 h-16 z-[1]">
+      <div
+        ref={rectRef}
+        className="absolute top-1/2 left-1/2 -translate-1/2 w-16 h-16 z-[1]"
+      >
+        {show && (
           <svg width="64" height="64" viewBox="0 0 64 64">
             <rect
               width="60"
@@ -39,6 +78,9 @@ const HoldToDisconnect = () => {
               className="stroke-red-100"
             />
             <rect
+              style={{
+                strokeDashoffset: "var(--progress)",
+              }}
               width="60"
               height="60"
               x="2"
@@ -50,11 +92,10 @@ const HoldToDisconnect = () => {
               strokeWidth="2"
               className="stroke-red-500"
               strokeDasharray="240"
-              strokeDashoffset="234"
             />
           </svg>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
