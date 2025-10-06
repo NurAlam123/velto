@@ -85,6 +85,8 @@ const HoldToDisconnect = () => {
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchStart={handleMouseDown}
+        onTouchEnd={handleMouseUp}
       >
         <UnlinkIcon
           className={cn(
