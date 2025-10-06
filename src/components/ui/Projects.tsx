@@ -2,7 +2,6 @@
 import { ChevronDownIcon, RightArrow } from "@/assets/icons";
 import { projects } from "@/constants/projects";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { useState } from "react";
 
 const Projects = () => {
