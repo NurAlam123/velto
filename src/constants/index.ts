@@ -3,6 +3,7 @@ import Countdown from "@/components/segments/countdown";
 import EditBadge from "@/components/segments/EditBadge";
 import FilterDisclosure from "@/components/segments/FilterDisclosure";
 import GaborProject from "@/components/segments/GaborProject";
+import HoldToDisconnect from "@/components/segments/HoldToDisconnect";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 import SetStatus from "@/components/segments/SetStatus";
 import ShowQR from "@/components/segments/ShowQR";
@@ -19,6 +20,13 @@ export type InteractionsType = {
 };
 
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 11,
+    title: "Hold to Disconnect",
+    badges: ["click", "hold"],
+    date: "Oct 06, 2025",
+    component: HoldToDisconnect,
+  },
   {
     id: 10,
     title: "Filter Disclosure",
