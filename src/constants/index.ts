@@ -7,6 +7,7 @@ import HoldToDisconnect from "@/components/segments/HoldToDisconnect";
 import ProgressiveInputStack from "@/components/segments/ProgressiveInputStack";
 import SetStatus from "@/components/segments/SetStatus";
 import ShowQR from "@/components/segments/ShowQR";
+import TabBar from "@/components/segments/TabBar";
 import TabToggler from "@/components/segments/TabToggler";
 import Wallet from "@/components/segments/wallet";
 
@@ -20,6 +21,13 @@ export type InteractionsType = {
 };
 
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 12,
+    title: "Tab Bar",
+    badges: ["click"],
+    date: "Oct 07, 2025",
+    component: TabBar,
+  },
   {
     id: 11,
     title: "Hold to Disconnect",
