@@ -12,22 +12,21 @@ import { useEffect, useRef, useState } from "react";
 const TabBar = () => {
   const [activeTab, setActiveTab] = useState(TABS[0].name);
   const containerRef = useRef<HTMLDivElement>(null);
-  const activeTabElementRef = useRef(null);
+  const activeTabElementRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    if (!containerRef.current || !activeTab || !activeTabElementRef.current)
+      return;
+
     const container = containerRef.current;
+    const activeTabElement = activeTabElementRef.current;
 
-    if (activeTab && container) {
-      const activeTabElement = activeTabElementRef.current;
+    const { offsetLeft, offsetWidth } = activeTabElement;
 
-      if (activeTabElement) {
-        const { offsetLeft, offsetWidth } = activeTabElement;
+    const clipLeft = offsetLeft;
+    const clipRight = offsetLeft + offsetWidth;
 
-        const clipLeft = offsetLeft;
-        const clipRight = offsetLeft + offsetWidth;
-        container.style.clipPath = `inset(4px ${container.offsetWidth - clipRight + 4}px 4px ${clipLeft + 4}px round 20px)`;
-      }
-    }
+    container.style.clipPath = `inset(4px ${container.offsetWidth - clipRight + 4}px 4px ${clipLeft + 4}px round 20px)`;
   }, [activeTab, activeTabElementRef, containerRef]);
 
   return (
