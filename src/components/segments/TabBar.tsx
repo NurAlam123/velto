@@ -23,10 +23,12 @@ const TabBar = () => {
 
     const { offsetLeft, offsetWidth } = activeTabElement;
 
-    const clipLeft = offsetLeft;
-    const clipRight = offsetLeft + offsetWidth;
+    const spacing = 4;
+    const clipLeft = offsetLeft + spacing;
+    const clipRight =
+      container.offsetWidth - (offsetLeft + offsetWidth) + spacing;
 
-    container.style.clipPath = `inset(4px ${container.offsetWidth - clipRight + 4}px 4px ${clipLeft + 4}px round 20px)`;
+    container.style.clipPath = `inset(4px ${clipRight}px 4px ${clipLeft}px round 20px)`;
   }, [activeTab, activeTabElementRef, containerRef]);
 
   return (
