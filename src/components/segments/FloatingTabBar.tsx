@@ -9,7 +9,7 @@ import {
 } from "@/assets/icons";
 import { useEffect, useRef, useState } from "react";
 
-const TabBar = () => {
+const FloatingTabBar = () => {
   const [activeTab, setActiveTab] = useState(TABS[0].name);
   const containerRef = useRef<HTMLDivElement>(null);
   const activeTabElementRef = useRef<HTMLButtonElement>(null);
@@ -93,4 +93,4 @@ const TABS = [
   },
 ];
 
-export default TabBar;
+export default FloatingTabBar;
