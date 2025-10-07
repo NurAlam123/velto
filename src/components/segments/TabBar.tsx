@@ -42,7 +42,8 @@ const TabBar = () => {
               setActiveTab(tab.name);
             }}
           >
-            <tab.icon />
+            <p className="sr-only">{tab.name}</p>
+            <tab.icon className="stroke-[1.5]" />
           </button>
         ))}
       </div>
@@ -60,7 +61,7 @@ const TabBar = () => {
             key={`tab-bar-dup-${i}`}
             className="cursor-pointer w-full h-full flex items-center justify-center rounded-full"
           >
-            <tab.icon />
+            <tab.icon className="stroke-2" />
           </button>
         ))}
       </div>
