@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AddSquareIcon,
   HomeIcon,
@@ -5,25 +7,59 @@ import {
   SearchIcon,
   UserCircleIcon,
 } from "@/assets/icons";
+import { useEffect, useRef, useState } from "react";
 
 const TabBar = () => {
+  const [activeTab, setActiveTab] = useState(TABS[0].name);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const activeTabElementRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (activeTab && container) {
+      const activeTabElement = activeTabElementRef.current;
+
+      if (activeTabElement) {
+        const { offsetLeft, offsetWidth } = activeTabElement;
+
+        const clipLeft = offsetLeft;
+        const clipRight = offsetLeft + offsetWidth;
+        container.style.clipPath = `inset(4px ${container.offsetWidth - clipRight + 4}px 4px ${clipLeft + 4}px round 20px)`;
+      }
+    }
+  }, [activeTab, activeTabElementRef, containerRef]);
+
   return (
     <div className="relative">
-      <div className="relative w-80 h-12 bg-white shadow-sm border border-neutral-100 rounded-full flex items-center justify-between px-6">
-        {Tabs.map((tab, i) => (
-          <button key={i}>
+      <div className="relative w-80 h-12 bg-white shadow-sm rounded-full flex items-center">
+        {TABS.map((tab, i) => (
+          <button
+            key={`tab-bar-${i}`}
+            className="cursor-pointer w-full h-full flex items-center justify-center rounded-full"
+            ref={activeTab === tab.name ? activeTabElementRef : null}
+            onClick={() => {
+              setActiveTab(tab.name);
+            }}
+          >
             <tab.icon />
           </button>
         ))}
       </div>
+
       <div
-        className="absolute w-full h-full bg-neutral-100 rounded-full flex items-center justify-between px-6 top-0 overflow-hidden"
+        inert
+        ref={containerRef}
+        className="absolute w-full h-full bg-neutral-100 rounded-full flex items-center top-0 overflow-hidden transition-[clip-path] ease-in-out"
         style={{
-          clipPath: "inset(4px 78% 4px 4px round 20px)",
+          clipPath: "inset(4px 260px 4px 4px round 20px)",
         }}
       >
-        {Tabs.map((tab, i) => (
-          <button key={i}>
+        {TABS.map((tab, i) => (
+          <button
+            key={`tab-bar-dup-${i}`}
+            className="cursor-pointer w-full h-full flex items-center justify-center rounded-full"
+          >
             <tab.icon />
           </button>
         ))}
@@ -32,7 +68,7 @@ const TabBar = () => {
   );
 };
 
-const Tabs = [
+const TABS = [
   {
     name: "Home",
     icon: HomeIcon,
