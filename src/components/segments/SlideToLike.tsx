@@ -60,7 +60,6 @@ const SlideToLikeCard = () => {
           left: 0,
           right: 0,
         }}
-        dragElastic={0.2}
         dragTransition={{ bounceStiffness: 650 }}
         style={{
           x,
