@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -9,30 +9,18 @@ import {
 } from "motion/react";
 import { HeartIcon } from "@/assets/icons";
 
-interface SlideToLikeContextType {}
-
-const SlideToLikeContext = createContext<SlideToLikeContextType | undefined>(
-  undefined,
-);
-
 const SlideToLike = () => {
   return (
-    <SlideToLikeContext.Provider value={{}}>
-      <div className="bg-neutral-50 p-2 rounded-2xl shadow-xs border border-neutral-200 overflow-hidden">
-        <SlideToLike.Card />
-        <SlideToLike.Card />
-        <SlideToLike.Card />
-        <SlideToLike.Card />
-      </div>
-    </SlideToLikeContext.Provider>
+    <div className="bg-neutral-50 p-2 rounded-2xl shadow-xs border border-neutral-200 overflow-hidden">
+      <SlideToLikeCard />
+      <SlideToLikeCard />
+      <SlideToLikeCard />
+      <SlideToLikeCard />
+    </div>
   );
 };
 
-SlideToLike.Card = function SlideToLikeCard() {
-  const context = useContext(SlideToLikeContext);
-  if (!context)
-    throw new Error("SlideToLike.Card must be used inside SlideToLike");
-
+const SlideToLikeCard = () => {
   const x = useMotionValue(0);
   const [liked, setLiked] = useState<boolean>(false);
   const crossed = useRef<boolean>(false);
