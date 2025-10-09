@@ -39,16 +39,23 @@ const CARDS_DATA = [
 
 const SlideToLike = () => {
   return (
-    <div className="bg-neutral-50 p-2 rounded-2xl shadow-xs border border-neutral-200 overflow-hidden">
-      {CARDS_DATA.map((data, i) => (
-        <SlideToLikeCard
-          key={`card-data-${i}`}
-          title={data.title}
-          duration={data.duration}
-          image={data.image}
-          artist={data.artist}
-        />
-      ))}
+    <div>
+      <div className="bg-neutral-200 p-2 rounded-2xl shadow-xs border border-neutral-200 overflow-hidden">
+        {CARDS_DATA.map((data, i) => (
+          <SlideToLikeCard
+            key={`card-data-${i}`}
+            title={data.title}
+            duration={data.duration}
+            image={data.image}
+            artist={data.artist}
+          />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="text-center text-xs text-neutral-400 select-none">
+          Drag right to like
+        </p>
+      </div>
     </div>
   );
 };
@@ -91,7 +98,7 @@ const SlideToLikeCard = ({
         <HeartIcon className="fill-white stroke-none size-9 ms-2" />
       </div>
       <motion.div
-        className="bg-neutral-50 hover:bg-neutral-100 rounded-xl flex items-center px-3 gap-4 h-full w-full z-[1] relative"
+        className="bg-neutral-200 hover:bg-neutral-300 rounded-xl flex items-center px-3 gap-4 h-full w-full z-[1] relative"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragTransition={{ bounceStiffness: 650 }}
@@ -119,7 +126,8 @@ const SlideToLikeCard = ({
             alt={title}
             width={420}
             height={420}
-            className="object-cover w-12 h-12"
+            className="object-cover w-12 h-12 pointer-events-none"
+            draggable="false"
           />
         </div>
         <div className="flex justify-between items-center w-full gap-2">
