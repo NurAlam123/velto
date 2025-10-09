@@ -29,7 +29,7 @@ SlideToLike.Card = function SlideToLikeCard() {
 
   return (
     <div className="w-72 h-16 relative">
-      <div className="bg-amber-300 absolute top-1/2 -translate-y-1/2 left-0 w-full min-h-14 h-full max-h-[calc(var(--spacing)*15.5)] z-[0] rounded-xl"></div>
+      <div className="bg-rose-400 absolute top-1/2 -translate-y-1/2 left-0 w-full min-h-14 h-full max-h-[calc(var(--spacing)*15.5)] z-[0] rounded-xl"></div>
       <motion.div
         className="bg-white hover:bg-neutral-100 rounded-xl flex items-center px-3 gap-4 h-full w-full z-[1] relative"
         drag="x"
