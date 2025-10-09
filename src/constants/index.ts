@@ -10,6 +10,7 @@ import ShowQR from "@/components/segments/ShowQR";
 import FloatingTabBar from "@/components/segments/FloatingTabBar";
 import TabToggler from "@/components/segments/TabToggler";
 import Wallet from "@/components/segments/wallet";
+import SlideToLike from "@/components/segments/SlideToLike";
 
 export type InteractionsType = {
   id: number;
@@ -21,6 +22,13 @@ export type InteractionsType = {
 };
 
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 13,
+    title: "Drag to Like",
+    badges: ["click"],
+    date: "Oct 09, 2025",
+    component: SlideToLike,
+  },
   {
     id: 12,
     title: "Floating Tab Bar",
