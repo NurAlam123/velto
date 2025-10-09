@@ -2,6 +2,7 @@
 
 import { createContext, useContext } from "react";
 import { motion } from "motion/react";
+import { HeartIcon } from "@/assets/icons";
 
 interface SlideToLikeContextType {}
 
@@ -28,8 +29,10 @@ SlideToLike.Card = function SlideToLikeCard() {
     throw new Error("SlideToLike.Card must be used inside SlideToLike");
 
   return (
-    <div className="w-72 h-16 relative">
-      <div className="bg-rose-400 absolute top-1/2 -translate-y-1/2 left-0 w-full min-h-14 h-full max-h-[calc(var(--spacing)*15.5)] z-[0] rounded-xl"></div>
+    <div className="w-72 h-16 relative cursor-grab active:cursor-grabbing">
+      <div className="bg-rose-400 absolute top-1/2 -translate-y-1/2 left-0 w-full min-h-14 h-full max-h-[calc(var(--spacing)*15.5)] z-[0] rounded-xl flex items-center">
+        <HeartIcon className="fill-white stroke-none size-9 ms-2" />
+      </div>
       <motion.div
         className="bg-white hover:bg-neutral-100 rounded-xl flex items-center px-3 gap-4 h-full w-full z-[1] relative"
         drag="x"
