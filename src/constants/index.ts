@@ -24,7 +24,7 @@ export type InteractionsType = {
 export const interactions: Array<InteractionsType> = [
   {
     id: 13,
-    title: "Drag to Like",
+    title: "Slide to Like",
     badges: ["click"],
     date: "Oct 09, 2025",
     component: SlideToLike,
