@@ -115,7 +115,7 @@ const StackGroupCard = ({
           zIndex: 4 - i,
           transform: open
             ? `translateY(calc(var(--card-height) * ${i})) scale(1)`
-            : `translateY(calc(var(--y) * ${i})) scale(${1 - i * 0.08})`,
+            : `translateY(calc(var(--y) * ${i < 3 ? i : 0})) scale(${i < 3 ? 1 - i * 0.08 : 0.76})`,
         } as React.CSSProperties
       }
       {...props}
