@@ -53,7 +53,7 @@ const StackGroup = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="h-full pt-4 w-full">
+    <div className="h-full pt-8 w-full">
       <div className="max-w-72 mx-auto">
         <div
           className="flex justify-between mb-3 select-none"
@@ -72,11 +72,13 @@ const StackGroup = () => {
           {CARDS_DATA.map((card, i) => (
             <StackGroupCard key={`stack-group-${card.id}`} i={i} open={open}>
               <div className="flex items-center h-full justify-between">
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-3">
                   <card.icon className="size-5 stroke-neutral-700" />
                   <div className="flex flex-col">
                     <p className="font-medium text-sm">{card.title}</p>
-                    <p className="text-xs text-neutral-400">{card.subtitle}</p>
+                    <p className="text-[0.65rem] text-neutral-400">
+                      {card.subtitle}
+                    </p>
                   </div>
                 </div>
                 <div className="text-xs font-medium text-neutral-600">
@@ -100,7 +102,7 @@ const StackGroupCard = ({
   return (
     <div
       className={cn(
-        "bg-neutral-200 min-w-72 min-h-16 h-16 rounded-2xl py-2 px-4 border border-neutral-300 absolute transition-transform duration-200 ease-in-out shadow-xs",
+        "bg-neutral-100 min-w-72 min-h-16 h-16 rounded-2xl py-2 px-4 border border-neutral-200 absolute transition-transform duration-200 ease-in-out shadow-xs",
       )}
       style={
         {
