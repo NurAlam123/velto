@@ -63,7 +63,10 @@ const StackGroup = () => {
           <div className="flex gap-1 items-center">
             <span className="text-sm font-medium">{CARDS_DATA.length}</span>
             <ChevronDownIcon
-              className={cn("size-5", open ? "-rotate-180" : "rotate-0")}
+              className={cn(
+                "size-5 transition-transform ease-in-out",
+                open ? "-rotate-180" : "rotate-0",
+              )}
             />
           </div>
         </div>
