@@ -11,6 +11,7 @@ import FloatingTabBar from "@/components/segments/FloatingTabBar";
 import TabToggler from "@/components/segments/TabToggler";
 import Wallet from "@/components/segments/wallet";
 import SlideToLike from "@/components/segments/SlideToLike";
+import StackGroup from "@/components/segments/StackGroup";
 
 export type InteractionsType = {
   id: number;
@@ -22,6 +23,13 @@ export type InteractionsType = {
 };
 
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 14,
+    title: "Stack Group",
+    badges: ["click"],
+    date: "Oct 11, 2025",
+    component: StackGroup,
+  },
   {
     id: 13,
     title: "Slide to Like",
