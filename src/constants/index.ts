@@ -12,6 +12,7 @@ import TabToggler from "@/components/segments/TabToggler";
 import Wallet from "@/components/segments/wallet";
 import SlideToLike from "@/components/segments/SlideToLike";
 import StackGroup from "@/components/segments/StackGroup";
+import ViewOnMap from "@/components/segments/ViewOnMap";
 
 export type InteractionsType = {
   id: number;
@@ -23,6 +24,13 @@ export type InteractionsType = {
 };
 
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 15,
+    title: "View on Map",
+    badges: ["hover"],
+    date: "Oct 29, 2025",
+    component: ViewOnMap,
+  },
   {
     id: 14,
     title: "Stack Group",
