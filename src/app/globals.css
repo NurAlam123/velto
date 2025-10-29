@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* hover wasn't working on touch-screen devices, but this fixes the problem. */
+@custom-variant hover (&:hover);
+
 @theme {
   --font-montserrat: var(--font-montserrat);
 

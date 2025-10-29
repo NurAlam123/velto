@@ -68,7 +68,7 @@ const ViewOnMap = () => {
 
         <div
           ref={mapContainer}
-          className="absolute inset-0 opacity-0 transition-opacity duration-[50ms] delay-[200ms] group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-200 group-hover:ease-in-out group-hover:delay-[50ms] origin-center"
+          className="absolute inset-0 top-0 left-0 opacity-0 pointer-events-none transition-opacity duration-[50ms] delay-[50ms] group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-200 group-hover:ease-in-out group-hover:delay-[50ms] origin-center group-hover:pointer-events-auto"
         ></div>
       </div>
     </div>
