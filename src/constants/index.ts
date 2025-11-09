@@ -13,6 +13,7 @@ import Wallet from "@/components/segments/wallet";
 import SlideToLike from "@/components/segments/SlideToLike";
 import StackGroup from "@/components/segments/StackGroup";
 import ViewOnMap from "@/components/segments/ViewOnMap";
+import DepthCard from "@/components/segments/DepthCard";
 
 export type InteractionsType = {
   id: number;
@@ -24,6 +25,13 @@ export type InteractionsType = {
 };
 
 export const interactions: Array<InteractionsType> = [
+  {
+    id: 16,
+    title: "Depth Card",
+    badges: ["hover"],
+    date: "Nov 10, 2025",
+    component: DepthCard,
+  },
   {
     id: 15,
     title: "View on Map",
